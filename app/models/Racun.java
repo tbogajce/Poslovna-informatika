@@ -1,10 +1,12 @@
 package models;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import play.db.jpa.Model;
 
@@ -30,11 +32,19 @@ public class Racun extends Model {
 	
 	@ManyToOne
 	private Banka banka;
+	
+	@OneToMany(mappedBy= "racun")
+	public List<DnevnoStanjeRacuna> dnevnaStanjaRacuna;
+	
+	
+	
+	
 
 	public Racun() {
 		super();
 	}
 
+	/*
 	public Racun(String brojRacuna, Boolean status, Date datumOtvaranja, Date datumZatvaranja, Klijent klijent,
 			Banka banka) {
 		super();
@@ -44,6 +54,31 @@ public class Racun extends Model {
 		this.datumZatvaranja = datumZatvaranja;
 		this.klijent = klijent;
 		this.banka = banka;
+	}
+	*/
+	
+	
+	
+
+	public Racun(String brojRacuna, Boolean status, Date datumOtvaranja, Date datumZatvaranja, Klijent klijent,
+			Banka banka, List<DnevnoStanjeRacuna> dnevnaStanjaRacuna) {
+		super();
+		this.brojRacuna = brojRacuna;
+		this.status = status;
+		this.datumOtvaranja = datumOtvaranja;
+		this.datumZatvaranja = datumZatvaranja;
+		this.klijent = klijent;
+		this.banka = banka;
+		this.dnevnaStanjaRacuna = dnevnaStanjaRacuna;
+	}
+
+
+	public List<DnevnoStanjeRacuna> getDnevnaStanjaRacuna() {
+		return dnevnaStanjaRacuna;
+	}
+
+	public void setDnevnaStanjaRacuna(List<DnevnoStanjeRacuna> dnevnaStanjaRacuna) {
+		this.dnevnaStanjaRacuna = dnevnaStanjaRacuna;
 	}
 
 	public String getBrojRacuna() {

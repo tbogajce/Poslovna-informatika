@@ -1,10 +1,12 @@
 package models;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import play.db.jpa.Model;
 
@@ -25,20 +27,41 @@ public class MedjubankarskiPrenos extends Model{
 	
 	@ManyToOne
 	private Banka bankaPrimalac;
+	
+	@OneToMany(mappedBy= "medjubankarskiPrenos")
+	public List<StavkePrenosa> stavkePrenosa;
 
 	public MedjubankarskiPrenos() {
 		super();
 	}
 
+	
+
 	public MedjubankarskiPrenos(String vrstaPoruke, Date datum, Double iznos, Banka bankaPosiljalac,
-			Banka bankaPrimalac) {
+			Banka bankaPrimalac, List<StavkePrenosa> stavkePrenosa) {
 		super();
 		this.vrstaPoruke = vrstaPoruke;
 		this.datum = datum;
 		this.iznos = iznos;
 		this.bankaPosiljalac = bankaPosiljalac;
 		this.bankaPrimalac = bankaPrimalac;
+		this.stavkePrenosa = stavkePrenosa;
 	}
+
+
+	
+
+	public List<StavkePrenosa> getStavkePrenosa() {
+		return stavkePrenosa;
+	}
+
+
+
+	public void setStavkePrenosa(List<StavkePrenosa> stavkePrenosa) {
+		this.stavkePrenosa = stavkePrenosa;
+	}
+
+
 
 	public String getVrstaPoruke() {
 		return vrstaPoruke;
