@@ -38,12 +38,25 @@ $(document).ready(function(){
 		item.addClass("highlighted");
 		sync(item);
 	});
+  $("#last").click(function(){
+		//indeksi pocinju od 1
+		//prvi red je header, zato se trazi drugo dete
+		//item = $("table tr:nth-child(2)");
+		var countx = $("table").children("tbody").find(".trww").length+1;
+		//alert($("#smtx2").length)
+		//alert($("table").children("tbody").find(".trww").length)
+		item = $('table tr:nth-child('+countx+')');
+		$(".highlighted").removeClass("highlighted");
+		item.addClass("highlighted");
+		sync(item);
+	});
 	
   $("#next").click(function(){
   		highlighted = $(".highlighted");
   		//nalazi poziciju trazanog u okviru selektovane selekcije
   		//indeksi pocinju od 0
-  		var count = $("tr").length;
+  		//var count = $("tr").length;
+  		var count = $("table").children("tbody").find(".trww").length+1;
   		if (count == 0)
   			return;
   		index =  $("tr").index(highlighted);
@@ -58,6 +71,27 @@ $(document).ready(function(){
   		$(".highlighted").removeClass("highlighted");
 		item.addClass("highlighted");
   		sync(item);
+	});
+  
+  $("#prev").click(function(){
+		highlighted = $(".highlighted");
+		//nalazi poziciju trazanog u okviru selektovane selekcije
+		//indeksi pocinju od 0
+		var count = $("table").children("tbody").find(".trww").length+1;
+		if (count == 0)
+			return;
+		index =  $("tr").index(highlighted);
+		if (index > $("table").children("tbody").find(".trww").length)
+			return;
+		//ako smo na poslednjem, predji na prvi (odnosno drugi red, preskacuci header)
+		selectChild = $("table").children("tbody").find(".trww").length+1;
+		//inace
+		if (index >1)
+			selectChild = index ; //povecavamo za 1, i jos dodajemo 1 jer nth child pocinje od 1, indeksi od 0
+		item = $("tr:nth-child(" + selectChild + ")");
+		$(".highlighted").removeClass("highlighted");
+		item.addClass("highlighted");
+		sync(item);
 	});
 	
 	$("#nextform").click(function()

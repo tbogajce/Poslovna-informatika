@@ -19,13 +19,14 @@ public class Drzave extends Controller{
 	
 	public static void create(Drzava drzava )
 	{
-		//System.out.println(drzava.naziv);
+		System.out.println("CREATE: "+drzava.naziv+", "+drzava.id);
 		drzava.save();
 		show("add",drzava.id);
 	}
 	
 	public static void edit(Drzava drzava)
 	{
+		System.out.println("EDIT: "+drzava.naziv+", "+drzava.id);
 		drzava.save();
 		show("edit",drzava.id);
 		

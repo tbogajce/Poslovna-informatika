@@ -46,6 +46,7 @@ public class NaseljenaMesta extends Controller{
 	
 	public static void create(NaseljenoMesto naseljenoMesto, Long drzava)
 	{
+		System.out.println("EDIT: "+naseljenoMesto.naziv+", "+naseljenoMesto.id);
 		Drzava drzavax = Drzava.findById(drzava);
 		naseljenoMesto.drzava=drzavax;
 		naseljenoMesto.save();
@@ -54,6 +55,7 @@ public class NaseljenaMesta extends Controller{
 	
 	public static void edit(NaseljenoMesto naseljenoMesto, Long drzava)
 	{
+		System.out.println("EDIT: "+naseljenoMesto.naziv+", "+naseljenoMesto.id);
 		Drzava drzavax = Drzava.findById(drzava);
 		naseljenoMesto.drzava=drzavax;
 		naseljenoMesto.save();
