@@ -9,10 +9,13 @@ GET     /                                       Application.index
 GET     /Drzave                                      Drzave.show
 
 # Home page
-GET     /NaseljenaMesta                                      NaseljenaMesta.show
+GET     /NaseljenaMesta                                NaseljenaMesta.show
 
 # Home page
 GET     /Klijenti                                      Klijenti.show
+
+# Home page
+GET     /Banke                                      Banke.show
 
 
 # Ignore favicon requests
