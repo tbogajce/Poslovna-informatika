@@ -17,6 +17,9 @@ GET     /Klijenti                                      Klijenti.show
 # Home page
 GET     /Banke                                      Banke.show
 
+# Home page
+GET     /Racuni                                      Racuni.show
+
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

@@ -44,7 +44,7 @@ public class Racun extends Model {
 		super();
 	}
 
-	/*
+	
 	public Racun(String brojRacuna, Boolean status, Date datumOtvaranja, Date datumZatvaranja, Klijent klijent,
 			Banka banka) {
 		super();
@@ -55,7 +55,7 @@ public class Racun extends Model {
 		this.klijent = klijent;
 		this.banka = banka;
 	}
-	*/
+	
 	
 	
 	
