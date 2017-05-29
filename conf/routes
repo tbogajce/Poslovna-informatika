@@ -11,6 +11,9 @@ GET     /Drzave                                      Drzave.show
 # Home page
 GET     /NaseljenaMesta                                      NaseljenaMesta.show
 
+# Home page
+GET     /Klijenti                                      Klijenti.show
+
 
 # Ignore favicon requests
 GET     /favicon.ico                            404
