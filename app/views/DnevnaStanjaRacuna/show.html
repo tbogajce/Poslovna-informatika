@@ -1,10 +1,10 @@
 #{extends 'standardForm.html' /}
-#{set title:'Dnevna Stanja Racuna' /}
+#{set title:'Dnevna stanje racuna' /}
 
 #{set 'prikazani'}
 	idZaPrikaz
 	#{/set}
-
+	
 <script>
 
 
@@ -22,22 +22,38 @@ function GetURLParameter(sParam)
 	    }
 	}
 
-
-
-
 $(document).ready(function(){
 	var zaPrikazivanjeStoTreba = 0;
 	//alert(GetURLParameter('id'));
 	//zaPrikazivanjeStoTreba = GetURLParameter('id');
 	//alert(zaPrikazivanjeStoTreba)
 	$("#drzavaPickup").click(function(){
-		id = $(".highlighted").find(".dr_id").html();
+		id = $(".highlighted").find(".racun_id").html();
 		$("select").val(id);
 		$('#drzaveModal').modal('toggle');
 	});
 });
 
 function sync(item){
+	datum = item.find(".dsr_datum").html();
+	prethodnoStanje = item.find(".dsr_prethodnoStanje").html();
+	prometNaTeret = item.find(".dsr_prometNaTeret").html();
+	prometUKorist = item.find(".dsr_prometUKorist").html();
+	novoStanje = item.find(".dsr_novoStanje").html();
+	racval = item.find(".racun").attr("value");
+	id = item.find(".id").html();
+	
+	$("#dnevnoStanjeRacuna_datum").val(datum);
+	$("#dnevnoStanjeRacuna_prethodnoStanje").val(prethodnoStanje);
+	$("#dnevnoStanjeRacuna_prometNaTeret").val(prometNaTeret);
+	$("#dnevnoStanjeRacuna_prometUKorist").val(prometUKorist);
+	$("#dnevnoStanjeRacuna_novoStanje").val(novoStanje);
+	$("#dnevnoStanjeRacuna_id").val(id);
+	$("#racun").val(racval);
+	
+	
+	
+	/*
 	oznaka = item.find(".nm_oznaka").html()
     naziv = item.find(".nm_naziv").html()
     //var smthn = highlighted;
@@ -53,6 +69,7 @@ function sync(item){
     $("#naseljenoMesto_id").val(id);
     //console.log(drzava.val());
     $("#drzava").val(drzval);
+    */
 }
 
 function remove(id)
@@ -70,8 +87,9 @@ function remove(id)
 	
 }
 
-</script>
-
+</script>	
+	
+	
 <p>
 <ul>
   <li><a href="@{DnevnaStanjaRacuna.show("search",null)}" id = "search"><img src="@{'/public/images/search.gif'}"/></a></li>
@@ -89,22 +107,26 @@ function remove(id)
 </p>
 
 <div class = "container-fluid">
-<h1>Dnevna Stanja Racuna</h1>
+<h1>Dnevna stanja racuna</h1>
 
 <table class="TabelaForme">
 	<tr class = "header">
-	   <th>Oznaka</th> 
-	   <th>Naziv</th>
-	   <th width="20%">Poštanski broj</th>
-	   <th>Država</th>
+	   <th>Datum</th> 
+	   <th>Prethodno Stanje</th>
+	   <th>Promet na teret</th>
+	   <th>Promet u korist</th>
+	   <th>Novo stanje</th>
+	   <th>Racun</th>
 	</tr>
-#{list items:naseljenaMesta, as:'naseljenoMesto'}
-	<tr #{if naseljenoMesto.id == selectedIndex} class = "highlighted trww" #{/if} class="trww">
-		<td class = "nm_oznaka">${naseljenoMesto.oznaka}</td>
-		<td class = "nm_naziv">${naseljenoMesto.naziv}</td>
-		<td class = "nm_postanskiBroj">${naseljenoMesto.postanskiBroj}</td>
-		<td value="${naseljenoMesto.drzava.id}" class = "drzava">${naseljenoMesto.drzava.naziv}</td>
-		<td style = "visibility: hidden; max-width: 0px" class = "id">${naseljenoMesto.id}</td>
+#{list items:dnevnaStanjaRacuna, as:'dnevnoStanjeRacuna'}
+	<tr #{if dnevnoStanjeRacuna.id == selectedIndex} class = "highlighted trww" #{/if} class="trww">
+		<td class = "dsr_datum">${dnevnoStanjeRacuna.datum}</td>
+		<td class = "dsr_prethodnoStanje">${dnevnoStanjeRacuna.prethodnoStanje}</td>
+		<td class = "dsr_prometNaTeret">${dnevnoStanjeRacuna.prometNaTeret}</td>
+		<td class = "dsr_prometUKorist">${dnevnoStanjeRacuna.prometUKorist}</td>
+		<td class = "dsr_novoStanje">${dnevnoStanjeRacuna.novoStanje}</td>
+		<td value="${dnevnoStanjeRacuna.racun.id}" class = "racun">${dnevnoStanjeRacuna.racun.brojRacuna}</td>
+		<td style = "visibility: hidden; max-width: 0px" class = "id">${dnevnoStanjeRacuna.id}</td>
 	</tr>
 #{/list}
 </table>
@@ -112,53 +134,62 @@ function remove(id)
 
 #{set 'action'}
     #{if mode == 'add'}
-        @{NaseljenaMesta.create()}
+        @{DnevnaStanjaRacuna.create()}
     #{/if}
     #{elseif mode == 'edit'}
-        @{NaseljenaMesta.edit()}
+        @{DnevnaStanjaRacuna.edit()}
     #{/elseif}
     #{else}
-       @{NaseljenaMesta.filter()}
+       @{DnevnaStanjaRacuna.filter()}
     #{/else}
   #{/set}
   
-
-
-
   
 <div class = "panel">
 	<p>
 	
 		<form action = "${action}">
 		
-				#{field 'naseljenoMesto.id'}
+				#{field 'dnevnoStanjeRacuna.id'}
 					<input type = "hidden" name = "${field.name}" id = "${field.id}"/>
 				#{/}
 				
 				<p>
-				#{field 'naseljenoMesto.oznaka'}
-					<label for = "${field.id}">Oznaka</label>
+				#{field 'dnevnoStanjeRacuna.datum'}
+					<label for = "${field.id}">Datum</label>
 					<input type = "text" name = "${field.name}" id = "${field.id}"/>
 				#{/}
 				</p>
 				<p>
-				#{field 'naseljenoMesto.naziv'}
-					<label for = "${field.id}">Naziv</label>
+				#{field 'dnevnoStanjeRacuna.prethodnoStanje'}
+					<label for = "${field.id}">Prethodno Stanje</label>
 					<input type = "text" name = "${field.name}" id = "${field.id}"/>
 				#{/}
 				</p>
 				<p>
-				#{field 'naseljenoMesto.postanskiBroj'}
-					<label for = "${field.id}">Poštanski broj</label>
+				#{field 'dnevnoStanjeRacuna.prometNaTeret'}
+					<label for = "${field.id}">Promet na teret</label>
 					<input type = "text" name = "${field.name}" id = "${field.id}"/>
 				#{/}
 				</p>
 				<p>
-				#{field 'drzava'}
-					<label for = "${field.id}">Država</label>
+				#{field 'dnevnoStanjeRacuna.prometUKorist'}
+					<label for = "${field.id}">Promet u korist</label>
+					<input type = "text" name = "${field.name}" id = "${field.id}"/>
+				#{/}
+				</p>
+				<p>
+				#{field 'dnevnoStanjeRacuna.novoStanje'}
+					<label for = "${field.id}">Novo stanje</label>
+					<input type = "text" name = "${field.name}" id = "${field.id}"/>
+				#{/}
+				</p>
+				<p>
+				#{field 'racun'}
+					<label for = "${field.id}">Racun</label>
 					<select name = "${field.name}" id = "${field.id}"/>
-					#{list items:drzave, as:'drzava'}
-					<option value = "${drzava.id}">${drzava.naziv}</option>
+					#{list items:racuni, as:'racun'}
+					<option value = "${racun.id}">${racun.brojRacuna}</option>
 					#{/list}
 					</select>
 					
@@ -179,26 +210,29 @@ function remove(id)
 		</form>
 	</p>
 </div>
-
+  
+  
  <!-- Modal -->
   <div class="modal fade" id="drzaveModal" role="dialog">
     <div class="modal-dialog">
       <!-- Modal content-->
       <div class="modal-content">
       <div class="modal-header">
-      	Države
+      	Racuni
       </div>
       <div class="modal-body">
 	    <table style = "padding:2em">
 		<tr class = "header">
-		   <th>Oznaka</th> 
-		   <th>Naziv</th>
+		   <th>Broj Racuna</th> 
+		   <th>Klijent</th>
+		   <th>Banka</th>
 		</tr>
-		#{list items:drzave, as:'drzava'}
+		#{list items:racuni, as:'racun'}
 		<tr>
-			<td class = "oznaka">${drzava.oznaka}</td>
-			<td class = "naziv">${drzava.naziv}</td>
-			<td style = "visibility: hidden; max-width: 0px" class = "dr_id">${drzava.id}</td>
+			<td class = "brojRacuna">${racun.brojRacuna}</td>
+			<td class = "klijent">${racun.klijent.ime} ${racun.klijent.prezime}</td>
+			<td class = "banka">${racun.banka.nazivBanke}</td>
+			<td style = "visibility: hidden; max-width: 0px" class = "racun_id">${racun.id}</td>
 		</tr>
 		#{/list}
 		</table>
@@ -210,3 +244,6 @@ function remove(id)
     </div>
    </div>
 </div>
+ 
+  
+
