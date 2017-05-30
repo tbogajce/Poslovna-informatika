@@ -20,7 +20,8 @@ public class Banke extends Controller{
 	
 	public static void create(Banka banka )
 	{
-		System.out.println("CREATE: "+banka.nazivBanke+", "+banka.id);
+		System.out.println("CREATE: "+banka.nazivBanke);
+		//System.out.println("Banka: "+banka);
 		banka.save();
 		show("add",banka.id);
 	}

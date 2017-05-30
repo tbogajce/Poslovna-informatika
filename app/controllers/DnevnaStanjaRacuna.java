@@ -21,6 +21,7 @@ public class DnevnaStanjaRacuna extends Controller{
 		render(racuni,dnevnaStanjaRacuna,mode,selectedId);
 	}
 	
+	
 	public static void nextMehanizam(Long id)
 	{
 		System.out.println(id);
@@ -46,6 +47,7 @@ public class DnevnaStanjaRacuna extends Controller{
 		renderTemplate("DnevnaStanjaRacuna/show.html",racuni,dnevnaStanjaRacuna,mode,0,idZaPrikaz);
 		
 	}
+	
 	
 	public static void create(DnevnoStanjeRacuna dnevnoStanjeRacuna, Long racun)
 	{
