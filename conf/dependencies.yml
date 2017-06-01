@@ -2,6 +2,9 @@
 
 require:
     - play
+    - javax.xml.bind -> jaxb-api 2.2.5
+    - com.sun.xml.bind -> jaxb-impl 2.2.5.1
+    - com.sun.xml.bind -> jaxb-xjc 2.2.5.1
     
     
 
