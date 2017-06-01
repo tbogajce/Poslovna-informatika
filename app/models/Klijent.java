@@ -1,6 +1,7 @@
 package models;
 
 import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,44 +11,47 @@ import javax.persistence.OneToMany;
 import play.db.jpa.Model;
 
 @Entity
-public class Klijent extends Model{
-	//jmbg, ime, prezime, adresa,telefon, email, pravno
-	@Column(nullable = false, length =13)
+public class Klijent extends Model {
+	// jmbg, ime, prezime, adresa,telefon, email, pravno
+	@Column(nullable = false, length = 13)
 	public String jmbg;
-	
-	@Column(nullable = false, length =70)
+
+	@Column(nullable = false, length = 70)
 	public String ime;
-	
-	@Column(nullable = false, length =70)
+
+	@Column(nullable = false, length = 70)
 	public String prezime;
-	
-	@Column(nullable = true, length =70)
+
+	@Column(nullable = true, length = 70)
 	public String adresa;
-	
-	@Column(nullable = true, length =25)
+
+	@Column(nullable = true, length = 25)
 	public String telefon;
-	
-	@Column(nullable = true, length =80)
+
+	@Column(nullable = true, length = 80)
 	public String email;
-	
+
 	@Column(nullable = true)
 	public Boolean pravno;
-	
+
 	@ManyToOne
 	private NaseljenoMesto naseljenoMesto;
-	
+
 	@ManyToOne
 	private Banka banka;
-	
-	@OneToMany(mappedBy= "klijent")
+
+	@OneToMany(mappedBy = "klijent")
 	public Collection<Racun> racuni;
+
+	@OneToMany(mappedBy = "klijent")
+	public List<PravnoLice> pravnaLica;
 
 	public Klijent() {
 		super();
 	}
 
 	public Klijent(String jmbg, String ime, String prezime, String adresa, String telefon, String email, Boolean pravno,
-			NaseljenoMesto naseljenoMesto, Banka banka, Collection<Racun> racuni) {
+			NaseljenoMesto naseljenoMesto, Banka banka, Collection<Racun> racuni, List<PravnoLice> pravnaLica) {
 		super();
 		this.jmbg = jmbg;
 		this.ime = ime;
@@ -59,6 +63,7 @@ public class Klijent extends Model{
 		this.naseljenoMesto = naseljenoMesto;
 		this.banka = banka;
 		this.racuni = racuni;
+		this.pravnaLica = pravnaLica;
 	}
 
 	public String getJmbg() {
@@ -140,7 +145,13 @@ public class Klijent extends Model{
 	public void setRacuni(Collection<Racun> racuni) {
 		this.racuni = racuni;
 	}
-	
-	
+
+	public List<PravnoLice> getPravnaLica() {
+		return pravnaLica;
+	}
+
+	public void setPravnaLica(List<PravnoLice> pravnaLica) {
+		this.pravnaLica = pravnaLica;
+	}
 
 }
