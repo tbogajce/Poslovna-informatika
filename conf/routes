@@ -32,6 +32,12 @@ GET     /ZatvaranjaRacuna                                      ZatvaranjaRacuna.
 # Home page
 GET     /StavkePrenosa                                      StavkePrenosaa.show
 
+# Home page
+GET     /Logovanje                                      Logovanje.show
+
+# Home page
+GET     /UcitavanjeNalogaZaPrenos                       UcitavanjeNalogaZaPrenos.show
+
 
 # Ignore favicon requests
 GET     /favicon.ico                            404
