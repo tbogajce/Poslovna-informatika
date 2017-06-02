@@ -14,32 +14,33 @@
                             <xs:element name="podaci_o_prenosu">
                                 <xs:complexType>
                                     <xs:sequence>
-                                        <xs:element name="sifra_placanja"/>
-                                        <xs:element name="valuta"/>
-                                        <xs:element name="iznos"/>
+                                        <xs:element name="sifra_placanja" type="xs:string"/>
+                                        <xs:element name="valuta" type="xs:string"/>
+                                        <xs:element name="iznos" type="xs:string"/>
                                     </xs:sequence>
                                 </xs:complexType>
                             </xs:element>
                             <xs:element name="transfer_podaci_duznik">
                                 <xs:complexType>
                                     <xs:sequence>
-                                        <xs:element name="racun_duznika"/>
-                                        <xs:element name="model"/>
-                                        <xs:element name="poziv_na_broj_duznika"/>
+                                        <xs:element name="racun_duznika" type="xs:string"/>
+                                        <xs:element name="model" type="xs:string"/>
+                                        <xs:element name="poziv_na_broj_duznika" type="xs:string"/>
                                     </xs:sequence>
                                 </xs:complexType>
                             </xs:element>
                             <xs:element name="transfer_podaci_poverioc">
                                 <xs:complexType>
                                     <xs:sequence>
-                                        <xs:element name="racun_poverioca"/>
-                                        <xs:element name="model"/>
-                                        <xs:element name="poziv_na_broj_poverioca"/>
+                                        <xs:element name="racun_poverioca" type="xs:string"/>
+                                        <xs:element name="model" type="xs:string"/>
+                                        <xs:element name="poziv_na_broj_poverioca" type="xs:string"
+                                        />
                                     </xs:sequence>
                                 </xs:complexType>
                             </xs:element>
                             <xs:element name="hitno" type="xs:boolean"/>
-                            <xs:element name="datum_valute"/>
+                            <xs:element name="datum_valute" type="xs:string"/>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>

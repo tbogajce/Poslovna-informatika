@@ -1,15 +1,12 @@
 package controllers;
 
 import java.io.File;
-import java.util.List;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
 import model.xmlws.Nalozi;
-import model.xmlws.Nalozi.NalogZaPrenos;
-import models.Radnik;
 import play.mvc.Controller;
 
 public class UcitavanjeNalogaZaPrenos extends Controller{
