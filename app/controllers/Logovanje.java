@@ -40,7 +40,9 @@ public class Logovanje extends Controller{
 				session.put("radnik", r);
 				session.put("banka", r.banka);
 				String mode = "";
+				System.out.println("Doslo do ovde");
 				renderTemplate("UcitavanjeNalogaZaPrenos/show.html", mode );
+				return;
 			}
 		}
 		

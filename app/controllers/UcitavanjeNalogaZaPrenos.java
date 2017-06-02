@@ -8,6 +8,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
 import model.xmlws.Nalozi;
+import model.xmlws.Nalozi.NalogZaPrenos;
 import models.Radnik;
 import play.mvc.Controller;
 
@@ -99,7 +100,12 @@ public class UcitavanjeNalogaZaPrenos extends Controller{
 		
 		// Prikaz svih odseka
 		for(Nalozi.NalogZaPrenos nalogZaPrenos : nalozi.getNalogZaPrenos())
-			System.out.println(nalogZaPrenos.getPodaciODuzniku().getIme());
+		{
+			System.out.println("DUZNIK: "+nalogZaPrenos.getPodaciODuzniku().getIme() + " " + nalogZaPrenos.getPodaciODuzniku().getPrezime());
+			System.out.println("POVERIOC: "+nalogZaPrenos.getPodaciOPoveriocu().getNaziv());
+			System.out.println("DUZNIK RACUN: "+ (String) nalogZaPrenos.getTransferPodaciDuznik().getRacunDuznika().toString());
+			System.out.println("PRIMAOC RACUN: "+ ((String) nalogZaPrenos.getTransferPodaciPoverioc().getRacunPoverioca()));
+		}
 		
 	}
 	
