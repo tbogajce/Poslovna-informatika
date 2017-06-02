@@ -18,16 +18,16 @@
             <iznos>2323</iznos>
         </podaci_o_prenosu>
         <transfer_podaci_duznik>
-            <racun_duznika>213-312312-3123123</racun_duznika>
+            <racun_duznika>123</racun_duznika>
             <model>54</model>
             <poziv_na_broj_duznika>26265-223-2323</poziv_na_broj_duznika>
         </transfer_podaci_duznik>
         <transfer_podaci_poverioc>
-            <racun_poverioca>2626-6566556-2112</racun_poverioca>
+            <racun_poverioca>456</racun_poverioca>
             <model>87</model>
             <poziv_na_broj_poverioca>58</poziv_na_broj_poverioca>
         </transfer_podaci_poverioc>
         <hitno>0</hitno>
-        <datum_valute>nzm</datum_valute>
+        <datum_valute>2017-06-02</datum_valute>
     </nalog_za_prenos>
 </nalozi>

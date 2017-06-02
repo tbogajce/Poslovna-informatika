@@ -28,6 +28,7 @@ public class Banke extends Controller{
 	
 	public static void edit(Banka banka)
 	{
+		//
 		System.out.println("EDIT: "+banka.nazivBanke+", "+banka.id);
 		banka.save();
 		show("edit",banka.id);

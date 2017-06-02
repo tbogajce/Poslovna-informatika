@@ -62,9 +62,10 @@ public class AnalitikaIzvoda extends Model{
 	
 	@ManyToOne
 	public DnevnoStanjeRacuna dnevnoStanjeRacuna;
-	
+	/*
 	@OneToMany(mappedBy= "analitikaIzvoda")
 	public List<StavkePrenosa> stavkePrenosa;
+	*/
 
 	public Date getDatumAnalitike() {
 		return datumAnalitike;
@@ -193,7 +194,7 @@ public class AnalitikaIzvoda extends Model{
 	public void setDnevnoStanjeRacuna(DnevnoStanjeRacuna dnevnoStanjeRacuna) {
 		this.dnevnoStanjeRacuna = dnevnoStanjeRacuna;
 	}
-
+/*
 	public List<StavkePrenosa> getStavkePrenosa() {
 		return stavkePrenosa;
 	}
@@ -201,11 +202,11 @@ public class AnalitikaIzvoda extends Model{
 	public void setStavkePrenosa(List<StavkePrenosa> stavkePrenosa) {
 		this.stavkePrenosa = stavkePrenosa;
 	}
-
+*/
 	public AnalitikaIzvoda(Date datumAnalitike, char smer, String duznik, String svrhaPlacanja, String primaoc,
 			Date datumNaloga, Date datumValute, String racunDuznika, String modelZaduzenja, String pozivNaBrojZaduzenja,
 			String racunPoverioca, String modelOdobrenja, String pozivNaBrojOdobrenja, double iznos, String sifraValute,
-			DnevnoStanjeRacuna dnevnoStanjeRacuna, List<StavkePrenosa> stavkePrenosa) {
+			DnevnoStanjeRacuna dnevnoStanjeRacuna/*, List<StavkePrenosa> stavkePrenosa*/) {
 		super();
 		this.datumAnalitike = datumAnalitike;
 		this.smer = smer;
@@ -223,7 +224,7 @@ public class AnalitikaIzvoda extends Model{
 		this.iznos = iznos;
 		this.sifraValute = sifraValute;
 		this.dnevnoStanjeRacuna = dnevnoStanjeRacuna;
-		this.stavkePrenosa = stavkePrenosa;
+		//this.stavkePrenosa = stavkePrenosa;
 	}
 
 	public AnalitikaIzvoda() {
