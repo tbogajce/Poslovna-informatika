@@ -32,8 +32,10 @@ public class DnevnoStanjeRacuna extends Model{
 	@ManyToOne
 	public Racun racun;
 	
+	/*
 	@OneToMany(mappedBy= "dnevnoStanjeRacuna")
 	public List<AnalitikaIzvoda> analitikeIzvoda;
+	*/
 
 	public Date getDatum() {
 		return datum;
@@ -82,7 +84,7 @@ public class DnevnoStanjeRacuna extends Model{
 	public void setRacun(Racun racun) {
 		this.racun = racun;
 	}
-
+/*
 	public List<AnalitikaIzvoda> getAnalitikeIzvoda() {
 		return analitikeIzvoda;
 	}
@@ -90,9 +92,9 @@ public class DnevnoStanjeRacuna extends Model{
 	public void setAnalitikeIzvoda(List<AnalitikaIzvoda> analitikeIzvoda) {
 		this.analitikeIzvoda = analitikeIzvoda;
 	}
-
+*/
 	public DnevnoStanjeRacuna(Date datum, double prethodnoStanje, double prometNaTeret, double prometUKorist,
-			double novoStanje, Racun racun, List<AnalitikaIzvoda> analitikeIzvoda) {
+			double novoStanje, Racun racun/*, List<AnalitikaIzvoda> analitikeIzvoda*/) {
 		super();
 		this.datum = datum;
 		this.prethodnoStanje = prethodnoStanje;
@@ -100,7 +102,7 @@ public class DnevnoStanjeRacuna extends Model{
 		this.prometUKorist = prometUKorist;
 		this.novoStanje = novoStanje;
 		this.racun = racun;
-		this.analitikeIzvoda = analitikeIzvoda;
+		//this.analitikeIzvoda = analitikeIzvoda;
 	}
 
 	public DnevnoStanjeRacuna() {
