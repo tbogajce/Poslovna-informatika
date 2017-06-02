@@ -1,18 +1,24 @@
 package models;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 
 import play.db.jpa.Model;
 
 @Entity
-public class Valuta extends Model{
-	
-	@Column(nullable = false, length =3)
+public class Valuta extends Model {
+
+	@Column(nullable = false, length = 3)
 	public String sifra;
-	
-	@Column(nullable = false, length =30)
+
+	@Column(nullable = false, length = 30)
 	public String naziv;
+
+	//@OneToMany(mappedBy = "valuta")
+	//public List<Racun> racuni;
 
 	public Valuta() {
 		super();
@@ -40,5 +46,6 @@ public class Valuta extends Model{
 	public void setNaziv(String naziv) {
 		this.naziv = naziv;
 	}
+
 	
 }
