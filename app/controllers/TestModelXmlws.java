@@ -21,7 +21,7 @@ public class TestModelXmlws {
 			Unmarshaller unmarshaller = context.createUnmarshaller();
 			
 			// Unmarshalling generiše objektni model na osnovu XML fajla 
-			Nalozi nalozi = (Nalozi) unmarshaller.unmarshal(new File("primjerXml.xml"));
+			Nalozi nalozi = (Nalozi) unmarshaller.unmarshal(new File("xmlPrimjer.xml"));
 
 			// Prikazuje unmarshallovan objekat
 			printNalozi(nalozi);
