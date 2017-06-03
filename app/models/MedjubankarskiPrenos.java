@@ -17,7 +17,7 @@ public class MedjubankarskiPrenos extends Model{
 	public String vrstaPoruke;
 	
 	@Column(nullable = false)
-	public Date datum;
+	public String datum;
 	
 	@Column(nullable = false)
 	public Double iznos;
@@ -27,9 +27,7 @@ public class MedjubankarskiPrenos extends Model{
 	
 	@ManyToOne
 	private Banka bankaPrimalac;
-	
-	@OneToMany(mappedBy= "medjubankarskiPrenos")
-	public List<StavkePrenosa> stavkePrenosa;
+
 
 	public MedjubankarskiPrenos() {
 		super();
@@ -37,28 +35,19 @@ public class MedjubankarskiPrenos extends Model{
 
 	
 
-	public MedjubankarskiPrenos(String vrstaPoruke, Date datum, Double iznos, Banka bankaPosiljalac,
-			Banka bankaPrimalac, List<StavkePrenosa> stavkePrenosa) {
+
+
+
+	
+
+	public MedjubankarskiPrenos(String vrstaPoruke, String datum, Double iznos, Banka bankaPosiljalac,
+			Banka bankaPrimalac) {
 		super();
 		this.vrstaPoruke = vrstaPoruke;
 		this.datum = datum;
 		this.iznos = iznos;
 		this.bankaPosiljalac = bankaPosiljalac;
 		this.bankaPrimalac = bankaPrimalac;
-		this.stavkePrenosa = stavkePrenosa;
-	}
-
-
-	
-
-	public List<StavkePrenosa> getStavkePrenosa() {
-		return stavkePrenosa;
-	}
-
-
-
-	public void setStavkePrenosa(List<StavkePrenosa> stavkePrenosa) {
-		this.stavkePrenosa = stavkePrenosa;
 	}
 
 
@@ -71,13 +60,19 @@ public class MedjubankarskiPrenos extends Model{
 		this.vrstaPoruke = vrstaPoruke;
 	}
 
-	public Date getDatum() {
+
+
+	public String getDatum() {
 		return datum;
 	}
 
-	public void setDatum(Date datum) {
+
+
+	public void setDatum(String datum) {
 		this.datum = datum;
 	}
+
+
 
 	public Double getIznos() {
 		return iznos;

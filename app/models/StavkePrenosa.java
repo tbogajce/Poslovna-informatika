@@ -15,6 +15,8 @@ public class StavkePrenosa extends Model{
 	
 	@ManyToOne
 	public MedjubankarskiPrenos medjubankarskiPrenos;
+	
+	
 
 	public AnalitikaIzvoda getAnalitikaIzvoda() {
 		return analitikaIzvoda;
@@ -31,6 +33,8 @@ public class StavkePrenosa extends Model{
 	public void setMedjubankarskiPrenos(MedjubankarskiPrenos medjubankarskiPrenos) {
 		this.medjubankarskiPrenos = medjubankarskiPrenos;
 	}
+	
+	
 
 	public StavkePrenosa(AnalitikaIzvoda analitikaIzvoda, MedjubankarskiPrenos medjubankarskiPrenos) {
 		super();

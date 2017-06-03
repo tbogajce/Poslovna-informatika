@@ -1,25 +1,32 @@
 package controllers;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.nio.charset.Charset;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
-
-import antlr.collections.List;
+import model.mbp.BankaPosiljalac;
+import model.mbp.BankaPrimalac;
+import model.mbp.DetaljiPrenosa;
+import model.mbp.MedjubankarskiPrenosi;
 import model.xmlws.Nalozi;
 import models.AnalitikaIzvoda;
 import models.Banka;
 import models.DnevnoStanjeRacuna;
+import models.MedjubankarskiPrenos;
 import models.Racun;
-import play.db.jpa.GenericModel.JPAQuery;
 import play.mvc.Controller;
 
 public class UcitavanjeNalogaZaPrenos extends Controller{
@@ -42,7 +49,7 @@ public class UcitavanjeNalogaZaPrenos extends Controller{
 		System.out.println("Working Directory = " +
 	              System.getProperty("user.dir"));
 		
-		if(session.get("radnik")!=null && session.get("banka")!=null)
+		if(session.get("radnik_id")!=null && session.get("banka_id")!=null)
 		{
 			try {
 				//
@@ -244,6 +251,8 @@ public class UcitavanjeNalogaZaPrenos extends Controller{
 				{
 					//TODO MEDJUBANKARSKI PRENOS VALJDA ... NESTO
 					System.out.println("Ovde sad valjda treba eksportovati jer je ovo DUznicki koji je u DRUGOJ banci");
+					//mislim da ovde ne treba eksport jer se ovo ne bi trebalo dogoditi
+					//nisam siguran, provjeriti
 				}
 				
 				if(String.valueOf(racun2.getBanka().getId()).equals(banka_id))
@@ -347,7 +356,85 @@ public class UcitavanjeNalogaZaPrenos extends Controller{
 				{
 					//TODO MEDJUBANKARSKI PRENOS VALJDA ... NESTO
 					System.out.println(" OVO SAD VALJDA TREBA EKSPORTOVATI JER JE OVO PRIMAOCKI RACUN U DRUGOJ BANCI");
-				}
+					/*
+					 * Racun poverioca nije iz te banke koja je prijavljena
+					 * Sto znaci da je potrebno napraviti medjubankarski prenos za narodnoj banci
+					 * */
+					
+					//AKO JE HITNO ILI IZNOS VECI OD 250000
+					String iznosIzXml = nalogZaPrenos.getPodaciOPrenosu().getIznos();
+					if(nalogZaPrenos.isHitno() || Double.parseDouble(iznosIzXml)>250000) {
+						System.out.println("USAO U IF");
+						DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+						Date date = new Date();
+						String datum = dateFormat.format(date);
+						String izn = nalogZaPrenos.getPodaciOPrenosu().getIznos();
+						Double iznos = Double.parseDouble(izn);
+						Banka bankaPosiljalac = racun1.getBanka();
+						Banka bankaPrimalac = racun2.getBanka();
+						MedjubankarskiPrenos mbp = new MedjubankarskiPrenos("MT103", datum, iznos, bankaPosiljalac, bankaPrimalac);
+						//i sada snimiti taj objekat
+						//MARSHALLING
+						try {
+							JAXBContext context = JAXBContext.newInstance("model.mbp");
+							// Marshaller je objekat zadužen za konverziju iz objektnog u XML model
+							Marshaller marshaller = context.createMarshaller();
+							
+							// Podešavanje marshaller-a
+							marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+							
+							MedjubankarskiPrenosi medjBanPrenosi = new MedjubankarskiPrenosi();
+							//Izgen ponovo
+							BankaPosiljalac bp1 = new BankaPosiljalac();
+							bp1.setNaziv(bankaPosiljalac.getNazivBanke());
+							bp1.setObracunskiRacun(bankaPosiljalac.getObracunskiRacun());
+							bp1.setSifra(bankaPosiljalac.getSifraBanke());
+							bp1.setSwiftKod(bankaPosiljalac.getSwiftKod());
+							
+							BankaPrimalac bp2 = new BankaPrimalac();
+							bp2.setNaziv(bankaPrimalac.getNazivBanke());
+							bp2.setObracunskiRacun(bankaPrimalac.getObracunskiRacun());
+							bp2.setSifra(bankaPrimalac.getSifraBanke());
+							bp2.setSwiftKod(bankaPrimalac.getSwiftKod());
+							
+							DetaljiPrenosa dp = new DetaljiPrenosa();
+							dp.setDatum(datum);
+							dp.setIznos(izn);
+							dp.setPoruka("MT103");
+							
+							
+							medjBanPrenosi.setBankaPosiljalac(bp1);
+							medjBanPrenosi.setBankaPrimalac(bp2);
+							medjBanPrenosi.setDetaljiPrenosa(dp);
+							
+
+						    FileOutputStream fos = new FileOutputStream("MBP "+medjBanPrenosi.getBankaPosiljalac() +".xml");
+						    ObjectOutputStream oos = new ObjectOutputStream(fos);
+						    oos.writeObject(medjBanPrenosi);
+						   
+							
+							// Umesto System.out-a, može se koristiti FileOutputStream
+							marshaller.marshal(medjBanPrenosi, System.out);
+							marshaller.marshal(medjBanPrenosi, fos);
+							 oos.close();
+						} catch(Exception e) {
+							e.printStackTrace();
+						}
+					} else {
+						//UKOLIKO JE MANJE I NIJE HITNO, onda mozda sacuvati u bazu pa poslati nekad kasnije
+						DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+						Date date = new Date();
+						String datum = dateFormat.format(date);
+						String izn = nalogZaPrenos.getPodaciOPrenosu().getIznos();
+						Double iznos = Double.parseDouble(izn);
+						Banka bankaPosiljalac = racun1.getBanka();
+						Banka bankaPrimalac = racun2.getBanka();
+						MedjubankarskiPrenos mbp = new MedjubankarskiPrenos("MT103", datum, iznos, bankaPosiljalac, bankaPrimalac);
+						mbp._save();
+					}
+					
+					
+				}//END ELSE
 				
 			}
 		}
