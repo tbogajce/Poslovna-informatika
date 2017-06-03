@@ -3,9 +3,6 @@ package controllers;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
-import java.nio.charset.Charset;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -17,6 +14,11 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
+import model.ir.BankaIr;
+import model.ir.DetaljiIzvodaRacuna;
+import model.ir.DuznikIr;
+import model.ir.IzvodRacuna;
+import model.ir.PoverilacIr;
 import model.mbp.BankaPosiljalac;
 import model.mbp.BankaPrimalac;
 import model.mbp.DetaljiPrenosa;
@@ -408,7 +410,7 @@ public class UcitavanjeNalogaZaPrenos extends Controller{
 							medjBanPrenosi.setDetaljiPrenosa(dp);
 							
 
-						    FileOutputStream fos = new FileOutputStream("MBP "+medjBanPrenosi.getBankaPosiljalac() +".xml");
+						    FileOutputStream fos = new FileOutputStream(System.getProperty("user.dir")+"/public/xmloviMBP/MBP "+medjBanPrenosi.getBankaPosiljalac().getNaziv() +".xml");
 						    ObjectOutputStream oos = new ObjectOutputStream(fos);
 						    oos.writeObject(medjBanPrenosi);
 						   
@@ -435,6 +437,65 @@ public class UcitavanjeNalogaZaPrenos extends Controller{
 					
 					
 				}//END ELSE
+				
+				if(String.valueOf(racun1.getBanka().getId()).equals(banka_id) && String.valueOf(racun2.getBanka().getId()).equals(banka_id)) {
+					/*
+					 * Ako oba racuna imaju istu banku, onda se vrsi izvod racuna
+					 * Prikazati svakom klijentu njegov transfer i detalje transfera
+					 * Za sada je to xml file pa mozda i baza dolazi u obzir
+					 * 
+					 * */
+					try {
+						JAXBContext context = JAXBContext.newInstance("model.ir");
+						// Marshaller je objekat zadužen za konverziju iz objektnog u XML model
+						Marshaller marshaller = context.createMarshaller();
+						
+						// Podešavanje marshaller-a
+						marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+						
+						DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+						Date date = new Date();
+						String datum = dateFormat.format(date);
+						
+						IzvodRacuna ir = new IzvodRacuna();
+						
+						BankaIr bankaIr = new BankaIr();
+						bankaIr.setNaziv(racun1.getBanka().getNazivBanke());
+						bankaIr.setSifraBanke(racun1.getBanka().getSifraBanke());
+						
+						DuznikIr duznikIr = new DuznikIr();
+						duznikIr.setBrojRacuna(racun1.getBrojRacuna());
+						duznikIr.setIme(nalogZaPrenos.getPodaciODuzniku().getIme());
+						duznikIr.setPrezime(nalogZaPrenos.getPodaciODuzniku().getPrezime());
+						
+						PoverilacIr poverilacIr = new PoverilacIr();
+						poverilacIr.setBrojRacuna(racun2.getBrojRacuna());
+						poverilacIr.setNaziv(nalogZaPrenos.getPodaciOPoveriocu().getNaziv());
+						
+						DetaljiIzvodaRacuna dir = new DetaljiIzvodaRacuna(); 
+						dir.setDatum(datum);
+						dir.setIznos(nalogZaPrenos.getPodaciOPrenosu().getIznos());
+						dir.setValuta(nalogZaPrenos.getPodaciOPrenosu().getValuta());
+						
+						ir.setBankaIr(bankaIr);
+						ir.setDetaljiIzvodaRacuna(dir);
+						ir.setDuznikIr(duznikIr);
+						ir.setPoverilacIr(poverilacIr);
+						
+						FileOutputStream fos = new FileOutputStream(System.getProperty("user.dir")+"/public/xmloviIR/IR "+ir.getBankaIr().getSifraBanke()+" " +ir.getDuznikIr().getBrojRacuna() +  ".xml");
+						ObjectOutputStream oos = new ObjectOutputStream(fos);
+						oos.writeObject(ir);
+						   
+							
+							// Umesto System.out-a, može se koristiti FileOutputStream
+							marshaller.marshal(ir, System.out);
+							marshaller.marshal(ir, fos);
+							 oos.close();
+						
+					}catch(Exception e) {
+						e.printStackTrace();
+					}
+				}
 				
 			}
 		}
