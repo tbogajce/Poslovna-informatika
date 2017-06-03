@@ -22,7 +22,15 @@ function GetURLParameter(sParam)
 	    }
 	}
 
-
+function nextform1(id)
+{
+	$(location).attr('href','/DnevnaStanjaRacuna/nextMehanizam?id='+id+'&sta=rac');
+}
+	
+function nextform2(id)
+{
+	$(location).attr('href','/ZatvaranjaRacuna/nextMehanizam?id='+id+'&sta=rac');
+}
 
 
 $(document).ready(function(){
@@ -35,13 +43,43 @@ $(document).ready(function(){
 		$("select").val(id);
 		$('#klijentModal').modal('toggle');
 	});
+	$("#nextform1").click(function()
+			{
+				console.log("DOSLO 1");
+				highlighted=$(".highlighted");
+				id = highlighted.find(".id").html();
+				nextform1(id);
+			});
+	$("#nextform2").click(function()
+			{
+				console.log("DOSLO 2");
+				highlighted=$(".highlighted");
+				id = highlighted.find(".id").html();
+				nextform2(id);
+			});
 	
+	/*
 	$("#bankaPickup").click(function(){
 		id = $(".highlighted").find(".bank_id").html();
 		$("select").val(id);
 		$('#bankaModal').modal('toggle');
 	});
+	*/
 });
+
+function dajVrijeme(xx)
+{
+	var niz_datuma=xx.split("-");
+    godina=niz_datuma[0];
+    mjesec = niz_datuma[1];
+    
+    niz_dana = niz_datuma[2].split(" ");
+    dan = niz_dana[0];
+    
+    totalan_datum = godina +"-"+mjesec+"-"+dan;
+    console.log(totalan_datum);
+    return totalan_datum;
+}
 
 function sync(item){
 	
@@ -51,8 +89,9 @@ function sync(item){
 	datumOtvaranja = item.find(".r_datumOtvaranja").html()
     datumZatvaranja = item.find(".r_datumzatvaranja").html()
     klijentVal = item.find(".r_klijent").attr("value");
-    bankaVal = item.find(".r_banka").attr("value");
+    //bankaVal = item.find(".r_banka").attr("value");
     id = item.find(".id").html()
+    
     
     
     $("#racun_brojRacuna").val(brojRacuna);
@@ -61,11 +100,14 @@ function sync(item){
 	 else 
 		$("#racun_status").prop('checked', false); //uncheck
 		
-    $("#racun_datumOtvaranja").val(datumOtvaranja);
-    $("#racun_datumZatvaranja").val(datumZatvaranja);
+    $("#racun_datumOtvaranja").val(dajVrijeme(datumOtvaranja));
+	if(datumZatvaranja!="")
+		{
+    //$("#racun_datumZatvaranja").val(dajVrijeme(datumZatvaranja));
+		}
     $("#racun_id").val(id);
     
-    $("#banka").val(bankaVal);
+    //$("#banka").val(bankaVal);
     $("#klijent").val(klijentVal);
 }
 
@@ -98,7 +140,8 @@ function remove(id)
   <li><a  id = "last"><img src="@{'/public/images/last.gif'}"/></a></li>
   <li><a href="@{Racuni.show("add")}" id = "add"><img src="@{'/public/images/add.gif'}"/></a></li>
   <li><a href="#" id = "remove"><img src="@{'/public/images/remove.gif'}"/></a></li>
-  <li><a href="#" id = "nextform"><img src="@{'/public/images/nextform.gif'}"/></a></li>
+  <li><a href="#" id = "nextform1">DSR<img src="@{'/public/images/nextform.gif'}"/></a></li>
+  <li><a href="#" id = "nextform2">ZR<img src="@{'/public/images/nextform.gif'}"/></a></li>
 </ul>
 </p>
 
@@ -155,13 +198,13 @@ function remove(id)
 				
 				<p>
 				#{field 'racun.brojRacuna'}
-					<label for = "${field.id}">Broj racuna</label>
+					<label for = "${field.id}">Broj racuna [filter]</label>
 					<input type = "text" name = "${field.name}" id = "${field.id}"/>
 				#{/}
 				</p>
 				<p>
 				#{field 'racun.status'}
-					<label for = "${field.id}">Status</label>
+					<label for = "${field.id}">Status [filter]</label>
 					<input type = "checkbox" name = "${field.name}" id = "${field.id}"/>
 				#{/}
 				</p>
@@ -197,6 +240,7 @@ function remove(id)
 				#{/}
 				</p>
 				
+				<!--  
 					<p>
 				#{field 'banka'}
 					<label for = "${field.id}">Banka</label>
@@ -215,6 +259,7 @@ function remove(id)
 					 </script>
 				#{/}
 				</p>
+				-->
 				
 				<div id = "formActions">
 					<input type = "submit" value = "Potvrda" style="margin-left:6em"/>
@@ -244,7 +289,7 @@ function remove(id)
 		   <th>Email</th>
 		   <th>Pravno</th> 
 		   <th>Banka</th>
-		   <th>Naseljeno mesto</th> 
+		   <th>Naseljeno mesto</th>
 		</tr>
 		#{list items:klijenti, as:'klijent'}
 		<tr>
@@ -270,11 +315,11 @@ function remove(id)
    </div>
    
    
-   
-      <!-- MODAL BANKA -->
+   <!-- 
+     
   <div class="modal fade" id="bankaModal" role="dialog">
     <div class="modal-dialog">
-      <!-- Modal content-->
+      
       <div class="modal-content">
       <div class="modal-header">
       	Banke
@@ -305,4 +350,5 @@ function remove(id)
       </div>
     </div>
    </div>
+    -->
 </div>

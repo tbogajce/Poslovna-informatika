@@ -84,7 +84,7 @@ function remove(id)
 
 function nextform(id)
 {
-	//$(location).attr('href','/NaseljenaMesta/nextMehanizam?id='+id);
+	$(location).attr('href','/Racuni/nextMehanizam?id='+id+'&sta=kli');
 }
 
 </script>
@@ -163,37 +163,37 @@ function nextform(id)
 				
 				<p>
 				#{field 'klijent.jmbg'}
-					<label for = "${field.id}">JMBG</label>
+					<label for = "${field.id}">JMBG [filter]</label>
 					<input type = "text" name = "${field.name}" id = "${field.id}"/>
 				#{/}
 				</p>
 				<p>
 				#{field 'klijent.ime'}
-					<label for = "${field.id}">Ime</label>
+					<label for = "${field.id}">Ime [filter]</label>
 					<input type = "text" name = "${field.name}" id = "${field.id}"/>
 				#{/}
 				</p>
 				<p>
 				#{field 'klijent.prezime'}
-					<label for = "${field.id}">Prezime</label>
+					<label for = "${field.id}">Prezime [filter]</label>
 					<input type = "text" name = "${field.name}" id = "${field.id}"/>
 				#{/}
 				</p>
 				<p>
 				#{field 'klijent.adresa'}
-					<label for = "${field.id}">Adresa</label>
+					<label for = "${field.id}">Adresa [filter]</label>
 					<input type = "text" name = "${field.name}" id = "${field.id}"/>
 				#{/}
 				</p>
 				<p>
 				#{field 'klijent.telefon'}
-					<label for = "${field.id}">Telefon</label>
+					<label for = "${field.id}">Telefon [filter]</label>
 					<input type = "text" name = "${field.name}" id = "${field.id}"/>
 				#{/}
 				</p>
 				<p>
 				#{field 'klijent.email'}
-					<label for = "${field.id}">Email</label>
+					<label for = "${field.id}">Email [filter]</label>
 					<input type = "text" name = "${field.name}" id = "${field.id}"/>
 				#{/}
 				</p>
@@ -211,7 +211,7 @@ function nextform(id)
 									<p>
 				#{field 'klijent.banka'}
 					<label for = "${field.id}">Banka</label>
-					<select name = "${field.name}" id = "${field.id}"/>
+					<select name = "${field.id}" id = "${field.id}"/>
 					#{list items:banke, as:'banka'}
 					<option value = "${banka.id}">${banka.nazivBanke}</option>
 					#{/list}
@@ -232,7 +232,7 @@ function nextform(id)
 				<p>
 				#{field 'klijent.naseljenoMesto'}
 					<label for = "${field.id}">Naseljeno mesto</label>
-					<select name = "${field.name}" id = "${field.id}"/>
+					<select name = "${field.id}" id = "${field.id}"/>
 					#{list items:naseljenaMesta, as:'naseljenoMesto'}
 					<option value = "${naseljenoMesto.id}">${naseljenoMesto.naziv}</option>
 					#{/list}

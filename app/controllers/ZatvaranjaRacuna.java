@@ -5,6 +5,7 @@ import java.util.List;
 
 import models.AnalitikaIzvoda;
 import models.DnevnoStanjeRacuna;
+import models.Klijent;
 import models.Racun;
 import models.ZatvaranjeRacuna;
 import play.mvc.Controller;
@@ -18,6 +19,16 @@ public class ZatvaranjaRacuna extends Controller{
 		if(mode == null || mode.equals(""))
 			mode = "edit";
 		render(zatvaranjaRacuna,mode,selectedId);
+	}
+	
+	public static void filter(String filterx)
+	{
+		//OVDE JOS DORADITI
+		//List<Klijent> racuni = Klijent.find("byBrojRacunaLikeAndStatusLike", "%"+racun.brojRacuna+"%", "%"+racun.status+"%").fetch();
+		//String mode = "edit";
+		List<ZatvaranjeRacuna> zatvaranjaRacuna = ZatvaranjeRacuna.find("byRacunLike", "%"+filterx+"%").fetch();
+		
+		renderTemplate("ZatvaranjeRacuna/show.html", zatvaranjaRacuna );
 	}
 	
 	

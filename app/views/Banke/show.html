@@ -17,6 +17,45 @@ function sync(item){
     $("#banka_id").val(id);
 }
 
+$(document).ready(function(){
+	$("#nextform1").click(function()
+			{
+				console.log("DOSLO 1");
+				highlighted=$(".highlighted");
+				id = highlighted.find(".id").html();
+				nextform1(id);
+			});
+	$("#nextform2").click(function()
+			{
+				console.log("DOSLO 2");
+				highlighted=$(".highlighted");
+				id = highlighted.find(".id").html();
+				nextform2(id);
+			});
+	$("#nextform3").click(function()
+			{
+				console.log("DOSLO 3");
+				highlighted=$(".highlighted");
+				id = highlighted.find(".id").html();
+				nextform3(id);
+			});
+});
+
+function nextform1(id)
+{
+	$(location).attr('href','/MedjubankarskiPrenosii/nextMehanizam?id='+id+'&sta=bpos');
+}
+	
+function nextform2(id)
+{
+	$(location).attr('href','/MedjubankarskiPrenosii/nextMehanizam?id='+id+'&sta=bpri');
+}
+
+function nextform3(id)
+{
+	$(location).attr('href','/Racuni/nextMehanizam?id='+id+'&sta=ban');
+}
+
 function remove(id)
 {
 	var answer = confirm("Are you sure you want to delete?");
@@ -52,7 +91,9 @@ function nextform(id)
   <li><a id = "last"><img src="@{'/public/images/last.gif'}"/></a></li>
   <li><a href="@{Banke.show("add",null)}" id = "add"><img src="@{'/public/images/add.gif'}"/></a></li>
   <li><a href="#" id = "remove"><img src="@{'/public/images/remove.gif'}"/></a></li>
-  <li><a href="#" id = "nextform"><img src="@{'/public/images/nextform.gif'}"/></a></li>
+  <li><a href="#" id = "nextform1">BPRI<img src="@{'/public/images/nextform.gif'}"/></a></li>
+  <li><a href="#" id = "nextform2">BPOS<img src="@{'/public/images/nextform.gif'}"/></a></li>
+  <li><a href="#" id = "nextform3">R<img src="@{'/public/images/nextform.gif'}"/></a></li>
 </ul>
 </p>
 
@@ -102,13 +143,13 @@ function nextform(id)
 				
 				<p>
 				#{field 'banka.nazivBanke'}
-					<label for = "${field.id}">Naziv</label>
+					<label for = "${field.id}">Naziv [filter]</label>
 					<input type = "text" name = "${field.name}" id = "${field.id}"/>
 				#{/}
 				</p>
 				<p>
 				#{field 'banka.sifraBanke'}
-					<label for = "${field.id}">Sifra</label>
+					<label for = "${field.id}">Sifra [filter]</label>
 					<input type = "text" name = "${field.name}" id = "${field.id}"/>
 				#{/}
 				</p>

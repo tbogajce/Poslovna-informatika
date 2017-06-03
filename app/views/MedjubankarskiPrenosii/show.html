@@ -1,5 +1,5 @@
 #{extends 'standardForm.html' /}
-#{set title:'Analitike izvoda' /}
+#{set title:'Medjubankarski prenosi' /}
 
 #{set 'prikazani'}
 	idZaPrikaz
@@ -21,37 +21,16 @@ function GetURLParameter(sParam)
 	        }
 	    }
 	}
-	
-
-	
-function nextform1(id)
-{
-	$(location).attr('href','/StavkePrenosaa/nextMehanizam?id='+id+'&sta=ai');
-}
-	
-function nextform2(id)
-{
-	$(location).attr('href','/ZatvaranjaRacuna/nextMehanizam?id='+id+'&sta=ai');
-}
 
 
 $(document).ready(function(){
-	$("#nextform1").click(function()
-			{
-				console.log("DOSLO 1");
-				highlighted=$(".highlighted");
-				id = highlighted.find(".id").html();
-				nextform1(id);
-			});
-	$("#nextform2").click(function()
-			{
-				console.log("DOSLO 2");
-				highlighted=$(".highlighted");
-				id = highlighted.find(".id").html();
-				nextform2(id);
-			});
+
 });
 
+function nextform(id)
+{
+	$(location).attr('href','/StavkePrenosaa/nextMehanizam?id='+id+'&sta=mp');
+}
 
 /*
 
@@ -93,7 +72,7 @@ function sync(item){
 	
 <p>
 <ul>
-  <li><a href="@{AnalitikeIzvoda.show("search",null)}" id = "search"><img src="@{'/public/images/search.gif'}"/></a></li>
+  <li><a href="#" id = "search"><img src="@{'/public/images/search.gif'}"/></a></li>
   <li><a href="#" id = "refresh"><img src="@{'/public/images/refresh.gif'}"/></a></li>
   <li><a href="#" id = "pickup"><img src="@{'/public/images/zoom-pickup.gif'}"/></a></li>
   <li><a href="#" id = "help"><img src="@{'/public/images/help.gif'}"/></a></li>
@@ -103,54 +82,31 @@ function sync(item){
   <li><a  id = "last"><img src="@{'/public/images/last.gif'}"/></a></li>
   <li><a href="#" id = "add"><img src="@{'/public/images/add.gif'}"/></a></li>
   <li><a href="#" id = "remove"><img src="@{'/public/images/remove.gif'}"/></a></li>
-  <li><a href="#" id = "nextform1">SP<img src="@{'/public/images/nextform.gif'}"/></a></li>
-  <li><a href="#" id = "nextform2">ZR<img src="@{'/public/images/nextform.gif'}"/></a></li>
+  <li><a href="#" id = "nextform"><img src="@{'/public/images/nextform.gif'}"/></a></li>
 </ul>
 </p>
 
 <div class = "container-fluid">
-<h1>Analitike izvoda</h1>
+<h1>Medjubankarski Prenosi</h1>
 
 <table class="TabelaForme">
 	<tr class = "header">
-	   <th>Datum</th> 
-	   <th>Smer</th>
-	   <th>Duznik</th>
-	   <th>Svrha Placanja</th>
-	   <th>Primaoc</th>
-	   <th>Dat. naloga</th>
-	   <th>Dat. val.</th>
-	   <th>Rac. duzn.</th>
-	   <th>Model zaduz.</th>
-	   <th>P.N.B. zaduz.</th>
-	   <th>Rac. pove.</th>
-	   <th>Model odobr.</th>
-	   <th>P.N.B. odobr.</th>
+	   <th>Vrsta poruke</th> 
+	   <th>Datum</th>
 	   <th>Iznos</th>
-	   <th>Sifr. valute</th>
-	   <th>Dnevno stanje racuna.</th>
+	   <th>Banka Posiljalac</th>
+	   <th>Banka Primalac</th>
 	</tr>
 	
-#{list items:analitikeIzvoda, as:'analitikaIzvoda'}
+#{list items:medjubankarskiPrenosi, as:'mp'}
 	<tr #{if analitikaIzvoda.id == selectedIndex} class = "highlighted trww" #{/if} class="trww">
-		<td class = "ai_datumAnalitike">${analitikaIzvoda.datumAnalitike}</td>
-		<td class = "ai_smer">${analitikaIzvoda.smer}</td>
-		<td class = "ai_duznik">${analitikaIzvoda.duznik}</td>
-		<td class = "ai_svrhaPlacanja">${analitikaIzvoda.svrhaPlacanja}</td>
-		<td class = "ai_primaoc">${analitikaIzvoda.primaoc}</td>
-		<td class = "ai_datumNaloga">${analitikaIzvoda.datumNaloga}</td>
-		<td class = "ai_datumValute">${analitikaIzvoda.datumValute}</td>
-		<td class = "ai_racunDuznika">${analitikaIzvoda.racunDuznika}</td>
-		<td class = "ai_modelZaduzenja">${analitikaIzvoda.modelZaduzenja}</td>
-		<td class = "ai_pozivNaBrojZaduzenja">${analitikaIzvoda.pozivNaBrojZaduzenja}</td>
-		<td class = "ai_racunPoverioca">${analitikaIzvoda.racunPoverioca}</td>
-		<td class = "ai_modelOdobrenja">${analitikaIzvoda.modelOdobrenja}</td>
-		<td class = "ai_pozivNaBrojOdobrenja">${analitikaIzvoda.pozivNaBrojOdobrenja}</td>
-		<td class = "ai_iznos">${analitikaIzvoda.iznos}</td>
-		<td class = "ai_sifraValute">${analitikaIzvoda.sifraValute}</td>
-		<td value="${analitikaIzvoda.dnevnoStanjeRacuna.id}" class = "dnevnoStanjeRacuna">${analitikaIzvoda.dnevnoStanjeRacuna.racun.brojRacuna}</td>
+		<td class = "ai_datumAnalitike">${mp.vrstaPoruke}</td>
+		<td class = "ai_smer">${mp.datum}</td>
+		<td class = "ai_duznik">${mp.iznos}</td>
+		<td class = "ai_svrhaPlacanja">${mp.bankaPosiljalac.naziv}</td>
+		<td class = "ai_primaoc">${mp.bankaPrimalac.naziv}</td>
 		
-		<td style = "visibility: hidden; max-width: 0px" class = "id">${analitikaIzvoda.id}</td>
+		<td style = "visibility: hidden; max-width: 0px" class = "id">${mp.id}</td>
 	</tr>
 #{/list}
 </table>

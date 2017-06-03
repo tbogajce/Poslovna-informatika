@@ -41,14 +41,14 @@ $(document).ready(function(){
 <p>
 <ul>
   <li><a href="@{ZatvaranjaRacuna.show("search",null)}" id = "search"><img src="@{'/public/images/search.gif'}"/></a></li>
-  <li><a href="@{ZatvaranjaRacuna.show("edit",null)}" id = "refresh"><img src="@{'/public/images/refresh.gif'}"/></a></li>
+  <li><a href="#" id = "refresh"><img src="@{'/public/images/refresh.gif'}"/></a></li>
   <li><a href="#" id = "pickup"><img src="@{'/public/images/zoom-pickup.gif'}"/></a></li>
   <li><a href="#" id = "help"><img src="@{'/public/images/help.gif'}"/></a></li>
   <li><a  id = "first"><img src="@{'/public/images/first.gif'}"/></a></li>
   <li><a  id = "prev"><img src="@{'/public/images/prev.gif'}"/></a></li>
   <li><a  id = "next"><img src="@{'/public/images/next.gif'}"/></a></li>
   <li><a  id = "last"><img src="@{'/public/images/last.gif'}"/></a></li>
-  <li><a href="@{ZatvaranjaRacuna.show("add")}" id = "add"><img src="@{'/public/images/add.gif'}"/></a></li>
+  <li><a href="#" id = "add"><img src="@{'/public/images/add.gif'}"/></a></li>
   <li><a href="#" id = "remove"><img src="@{'/public/images/remove.gif'}"/></a></li>
   <li><a href="#" id = "nextform"><img src="@{'/public/images/nextform.gif'}"/></a></li>
 </ul>
@@ -77,6 +77,35 @@ $(document).ready(function(){
 #{/list}
 </table>
 
+<!-- 
+<div class = "panel">
+	<p>
+	
+		#{set 'action'}
+		  
+		    @{ZatvaranjaRacuna.filter()}
+		  
+		#{/set}
+	
+		<form action=${action} method="post">
+		
+				
+				
+				<p>
+				#{field 'filterx'}
+					<label for = "filterx">Racun [filter]</label>
+					<input type = "text" name = "filterx" id = "filterx"/>
+				#{/}
+				</p>
+				<div id = "formActions">
+					<input type = "submit" value = "Potvrda" style="margin-left:6em"/>
+					<a href = "#" style="margin-left:1em">Rollback</a>
+				</div>			
+				
+		</form>
+	</p>
+</div>
+ -->
 
 
   
