@@ -65,6 +65,12 @@ $(document).ready(function(){
 		$('#bankaModal').modal('toggle');
 	});
 	*/
+	$("#valutaPickup").click(function(){
+		id = $(".highlighted").find(".val_id").html();
+		$("select").val(id);
+		$('#valutaModal').modal('toggle');
+	});
+	
 });
 
 function dajVrijeme(xx)
@@ -89,7 +95,8 @@ function sync(item){
 	datumOtvaranja = item.find(".r_datumOtvaranja").html()
     datumZatvaranja = item.find(".r_datumzatvaranja").html()
     klijentVal = item.find(".r_klijent").attr("value");
-    //bankaVal = item.find(".r_banka").attr("value");
+ //   bankaVal = item.find(".r_banka").attr("value");
+    valutaVal = item.find(".r_valuta").attr("value");
     id = item.find(".id").html()
     
     
@@ -107,8 +114,9 @@ function sync(item){
 		}
     $("#racun_id").val(id);
     
-    //$("#banka").val(bankaVal);
+  //  $("#banka").val(bankaVal);
     $("#klijent").val(klijentVal);
+    $("#valuta").val(valutaVal);
 }
 
 function remove(id)
@@ -155,7 +163,8 @@ function remove(id)
 	   <th>Datum otvaranja</th> 
 	   <th>Datum zatvaranja</th>
 	   <th>Klijent JMBG</th>
-	   <th>Banka</th>
+	 <!--   <th>Banka</th> -->
+	   <th>Valuta</th>
 	</tr>
 #{list items:racuni, as:'racun'}
 	<tr #{if racun.id == selectedIndex} class = "highlighted trww" #{/if} class="trww">
@@ -164,7 +173,8 @@ function remove(id)
 		<td class = "r_datumOtvaranja">${racun.datumOtvaranja}</td>
 		<td class = "r_datumZatvaranja">${racun.datumZatvaranja}</td>
 		<td value="${racun.klijent.id}" class = "r_klijent">${racun.klijent.jmbg}</td>
-		<td value="${racun.banka.id}" class = "r_banka">${racun.banka.nazivBanke}</td>
+	 <!--	<td value="${racun.banka.id}" class = "r_banka">${racun.banka.nazivBanke}</td> -->
+		<td value="${racun.valuta.id}" class = "r_valuta">${racun.valuta.naziv}</td>
 		<td style = "visibility: hidden; max-width: 0px" class = "id">${racun.id}</td>
 	</tr>
 #{/list}
@@ -240,7 +250,7 @@ function remove(id)
 				#{/}
 				</p>
 				
-				<!--  
+		<!--		 
 					<p>
 				#{field 'banka'}
 					<label for = "${field.id}">Banka</label>
@@ -260,6 +270,25 @@ function remove(id)
 				#{/}
 				</p>
 				-->
+						<p>
+				#{field 'valuta'}
+					<label for = "${field.id}">Valuta</label>
+					<select name = "${field.name}" id = "${field.id}"/>
+					#{list items:valute, as:'valuta'}
+					<option value = "${valuta.id}">${valuta.naziv}</option>
+					#{/list}
+					</select>
+					
+					 <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#valutaModal">...	</button>
+					 
+					 <script>
+					 	//alert(zaPrikazivanjeStoTreba);
+					 	//document.getElementById('${field.id}').selectedIndex=zaPrikazivanjeStoTreba;
+					 	document.getElementById('${field.id}').selectedIndex=GetURLParameter('id')-1;
+					 </script>
+				#{/}
+				</p>
+				
 				
 				<div id = "formActions">
 					<input type = "submit" value = "Potvrda" style="margin-left:6em"/>
@@ -315,8 +344,8 @@ function remove(id)
    </div>
    
    
-   <!-- 
-     
+   
+ <!--    
   <div class="modal fade" id="bankaModal" role="dialog">
     <div class="modal-dialog">
       
@@ -350,5 +379,38 @@ function remove(id)
       </div>
     </div>
    </div>
-    -->
+   -->
+   
+   <!-- VALUTE MODAL -->
+    <!-- Modal -->
+  <div class="modal fade" id="valutaModal" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content" style = "width:970px;margin-left:-200px" >
+      <div class="modal-header">
+      	Valute
+      </div>
+      <div class="modal-body" style = "width:970px;margin-left:-200px" >
+	    <table style = "padding:2em;width:950px;margin-left:200px">
+		<tr class = "header">
+		   <th>Sifra</th> 
+		   <th>Naziv</th>
+		</tr>
+		#{list items:valute, as:'valuta'}
+		<tr>
+			<td class = "val_sifra">${valuta.sifra}</td>
+			<td class = "val_naziv">${valuta.naziv}</td>
+			
+			<td style = "visibility: hidden; max-width: 0px" class = "val_id">${valuta.id}</td>
+		</tr>
+		#{/list}
+		</table>
+		<div class="modal-footer">
+			<input id = "valutaPickup" type = "button" value = "izbor"/>
+		</div>
+		</div>
+      </div>
+    </div>
+   </div>
+   
 </div>

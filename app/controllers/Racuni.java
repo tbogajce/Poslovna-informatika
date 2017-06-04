@@ -3,12 +3,10 @@ package controllers;
 import java.util.ArrayList;
 import java.util.List;
 
-import models.AnalitikaIzvoda;
 import models.Banka;
 import models.Klijent;
-import models.NaseljenoMesto;
 import models.Racun;
-import models.ZatvaranjeRacuna;
+import models.Valuta;
 import play.mvc.Controller;
 
 public class Racuni extends Controller{
@@ -18,9 +16,10 @@ public class Racuni extends Controller{
 		List<Klijent> klijenti = Klijent.findAll();
 		List<Banka> banke = Banka.findAll();
 		List<Racun> racuni = Racun.findAll();
+		List<Valuta> valute = Valuta.findAll();
 		if(mode == null || mode.equals(""))
 			mode = "edit";
-		render(racuni, klijenti, banke,mode,selectedIndex);
+		render(racuni, klijenti, banke,valute,mode,selectedIndex);
 	}
 	
 	public static void nextMehanizam(Long id,String sta)
@@ -78,18 +77,20 @@ public class Racuni extends Controller{
 	}
 	
 	
-	public static void create(Racun racun/*, Long banka*/, Long klijent )
+	public static void create(Racun racun/*, Long banka*/, Long klijent, Long valuta )
 	{
 		System.out.println("CREATE: "+racun.id+", "+racun.brojRacuna);
 		Klijent kl = Klijent.findById(klijent);
 		Banka b = kl.getBanka(); /*Banka.findById(banka);*/
+		Valuta val = Valuta.findById(valuta);
+		racun.setValuta(val);
 		racun.setBanka(b);
 		racun.setKlijent(kl);
 		racun.save();
 		show("add",racun.id);
 	}
 	
-	public static void edit(Racun racun/*,  Long banka*/, Long klijent)
+	public static void edit(Racun racun/*,  Long banka*/, Long klijent, Long valuta)
 	{
 		
 		Klijent kl = Klijent.findById(klijent);
@@ -99,6 +100,8 @@ public class Racuni extends Controller{
 		
 		Banka oldBank = racun.getBanka();
 		Klijent oldKlijent= racun.getKlijent();
+		Valuta val = Valuta.findById(valuta);
+		racun.setValuta(val);
 		if(oldBank==b && oldKlijent==kl)
 		{
 			racun.save();

@@ -33,6 +33,9 @@ public class Racun extends Model {
 	@ManyToOne
 	private Banka banka;
 	
+	@ManyToOne
+	private Valuta valuta;
+	
 	@OneToMany(mappedBy= "racun")
 	public List<DnevnoStanjeRacuna> dnevnaStanjaRacuna;
 	
@@ -70,6 +73,32 @@ public class Racun extends Model {
 		this.klijent = klijent;
 		this.banka = banka;
 		this.dnevnaStanjaRacuna = dnevnaStanjaRacuna;
+	}
+	
+	
+
+
+	public Racun(String brojRacuna, Boolean status, Date datumOtvaranja, Date datumZatvaranja, Klijent klijent,
+			Banka banka, Valuta valuta) {
+		super();
+		this.brojRacuna = brojRacuna;
+		this.status = status;
+		this.datumOtvaranja = datumOtvaranja;
+		this.datumZatvaranja = datumZatvaranja;
+		this.klijent = klijent;
+		this.banka = banka;
+		this.valuta = valuta;
+	}
+
+	
+	
+	public Valuta getValuta() {
+		return valuta;
+	}
+
+
+	public void setValuta(Valuta valuta) {
+		this.valuta = valuta;
 	}
 
 
