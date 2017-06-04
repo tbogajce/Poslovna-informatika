@@ -50,7 +50,7 @@ public class Racuni extends Controller{
 			Long idZaPrikaz = id;
 			renderTemplate("Racuni/show.html",racuni,klijenti,banke,mode,0,idZaPrikaz);
 		}
-		else
+		else if(sta.equals("ban"))
 		{
 			Banka banka = Banka.findById(id);
 			List<Racun> racuni = Racun.findAll();
@@ -59,6 +59,27 @@ public class Racuni extends Controller{
 			for(Racun nm : racuni)
 			{
 				if(nm.getBanka().id == banka.id)
+				{
+					racuniZaPrikaz.add(nm);
+					System.out.println("naslo neko racun ..");
+				}
+			}
+			String mode = "edit";
+			racuni.clear();
+			racuni.addAll(racuniZaPrikaz);
+			//render(drzave,mestaZaPrikaz,"edit",0);
+			Long idZaPrikaz = id;
+			renderTemplate("Racuni/show.html",racuni,klijenti,banke,mode,0,idZaPrikaz);
+		}
+		else
+		{
+			Valuta valuta = Valuta.findById(id);
+			List<Racun> racuni = Racun.findAll();
+			List<Racun> racuniZaPrikaz = new ArrayList<Racun>();
+			
+			for(Racun nm : racuni)
+			{
+				if(nm.getValuta().id == valuta.id)
 				{
 					racuniZaPrikaz.add(nm);
 					System.out.println("naslo neko racun ..");
@@ -124,9 +145,11 @@ public class Racuni extends Controller{
 	public static void filter(Racun racun)
 	{
 		//OVDE JOS DORADITI
-		List<Klijent> racuni = Klijent.find("byBrojRacunaLikeAndStatusLike", "%"+racun.brojRacuna+"%", "%"+racun.status+"%").fetch();
+		List<Klijent> klijenti = Klijent.findAll();
+		List<Valuta> valute = Valuta.findAll();
+		List<Racun> racuni = Racun.find("byBrojRacunaLike", "%"+racun.brojRacuna+"%").fetch();
 		String mode = "edit";
-		renderTemplate("Racuni/show.html", racuni, mode );
+		renderTemplate("Racuni/show.html", racuni,valute,klijenti, mode );
 	}
 	
 	public static void delete(Long id)

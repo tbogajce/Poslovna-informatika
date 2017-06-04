@@ -37,6 +37,20 @@ $(document).ready(function(){
 		$("select").val(id);
 		$('#bankaModal').modal('toggle');
 	});
+	$("#nextform1").click(function()
+			{
+				console.log("DOSLO 1");
+				highlighted=$(".highlighted");
+				id = highlighted.find(".id").html();
+				nextform1(id);
+			});
+	$("#nextform2").click(function()
+			{
+				console.log("DOSLO 2");
+				highlighted=$(".highlighted");
+				id = highlighted.find(".id").html();
+				nextform2(id);
+			});
 });
 
 function sync(item){
@@ -82,11 +96,14 @@ function remove(id)
 	
 }
 
-function nextform(id)
+function nextform1(id)
 {
 	$(location).attr('href','/Racuni/nextMehanizam?id='+id+'&sta=kli');
 }
-
+function nextform2(id)
+{
+	$(location).attr('href','/PravnaLica/nextMehanizam?id='+id+'&sta=kli');
+}
 </script>
 
 
@@ -103,7 +120,8 @@ function nextform(id)
   <li><a id = "last"><img src="@{'/public/images/last.gif'}"/></a></li>
   <li><a href="@{Klijenti.show("add",null)}" id = "add"><img src="@{'/public/images/add.gif'}"/></a></li>
   <li><a href="#" id = "remove"><img src="@{'/public/images/remove.gif'}"/></a></li>
-  <li><a href="#" id = "nextform"><img src="@{'/public/images/nextform.gif'}"/></a></li>
+  <li><a href="#" id = "nextform1">R<img src="@{'/public/images/nextform.gif'}"/></a></li>
+  <li><a href="#" id = "nextform2">PL<img src="@{'/public/images/nextform.gif'}"/></a></li>
 </ul>
 </p>
 

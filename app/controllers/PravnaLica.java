@@ -1,7 +1,10 @@
 package controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import models.AnalitikaIzvoda;
+import models.DnevnoStanjeRacuna;
 import models.Klijent;
 import models.PravnoLice;
 import models.SifarnikDelatnosti;
@@ -16,6 +19,66 @@ public class PravnaLica extends Controller {
 		if (mode == null || mode.equals(""))
 			mode = "edit";
 		render(klijenti, sifarniciDelatnosti, pravnaLica, mode, selectedIndex);
+	}
+	
+	
+	public static void nextMehanizam(Long id,String sta)
+	{
+		if(sta.equals("kli"))
+		{
+
+
+			System.out.println(id);
+			List<Klijent> klijenti = Klijent.findAll();
+			List<SifarnikDelatnosti> sifarniciDelatnosti = SifarnikDelatnosti.findAll();
+			//List<PravnoLice> pravnaLica = PravnoLice.findAll();
+			Klijent klijent = Klijent.findById(id);
+			List<PravnoLice> pravnaLica = PravnoLice.findAll();
+			List<PravnoLice> pravnaLicaZaPrikaz = new ArrayList<PravnoLice>();
+			//List<DnevnoStanjeRacuna> dnevnaStanjaRacuna = DnevnoStanjeRacuna.findAll();
+
+			for(PravnoLice nm : pravnaLica)
+			{
+				if(nm.getKlijent().id == klijent.id)
+				{
+					pravnaLicaZaPrikaz.add(nm);
+					//System.out.println("naslo neku analitiku izvoda..");
+				}
+			}
+			String mode = "edit";
+			pravnaLica.clear();
+			pravnaLica.addAll(pravnaLicaZaPrikaz);
+			//render(drzave,mestaZaPrikaz,"edit",0);
+			Long idZaPrikaz = id;
+			renderTemplate("PravnaLica/show.html",sifarniciDelatnosti,klijenti,pravnaLica,mode,0,idZaPrikaz);
+		}
+		else
+		{
+			//System.out.println(id);
+			List<Klijent> klijenti = Klijent.findAll();
+			List<SifarnikDelatnosti> sifarniciDelatnosti = SifarnikDelatnosti.findAll();
+			//List<PravnoLice> pravnaLica = PravnoLice.findAll();
+			SifarnikDelatnosti sifarnikDelatnosti = SifarnikDelatnosti.findById(id);
+			List<PravnoLice> pravnaLica = PravnoLice.findAll();
+			List<PravnoLice> pravnaLicaZaPrikaz = new ArrayList<PravnoLice>();
+			//List<DnevnoStanjeRacuna> dnevnaStanjaRacuna = DnevnoStanjeRacuna.findAll();
+
+			for(PravnoLice nm : pravnaLica)
+			{
+				if(nm.getSifarnikDelatnosti().id == sifarnikDelatnosti.id)
+				{
+					pravnaLicaZaPrikaz.add(nm);
+					//System.out.println("naslo neku analitiku izvoda..");
+				}
+			}
+			String mode = "edit";
+			pravnaLica.clear();
+			pravnaLica.addAll(pravnaLicaZaPrikaz);
+			//render(drzave,mestaZaPrikaz,"edit",0);
+			Long idZaPrikaz = id;
+			renderTemplate("PravnaLica/show.html",sifarniciDelatnosti,klijenti,pravnaLica,mode,0,idZaPrikaz);
+		}
+		
 	}
 
 	public static void create(PravnoLice pravnoLice, Long klijent, Long sifarnikDelatnosti) {

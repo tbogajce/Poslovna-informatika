@@ -57,6 +57,7 @@ public class Racun extends Model {
 		this.datumZatvaranja = datumZatvaranja;
 		this.klijent = klijent;
 		this.banka = banka;
+		
 	}
 	
 	

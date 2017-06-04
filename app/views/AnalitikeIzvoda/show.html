@@ -155,6 +155,47 @@ function sync(item){
 #{/list}
 </table>
 
+#{set 'action'}
+		  
+		    @{AnalitikeIzvoda.filter()}
+	#{/set}
+		
+<div class = "panel">
+	<p>
+	
+		
+	
+		<form action=${action} method="post">
+				
+				<p>
+				
+					<label for = "datum">Datum [filter]</label>
+					<input type = "date" name = "datum" id = "datum"/>
+				
+				</p>
+				<p>
+				
+					<label for = "smer">Smer [filter]</label>
+					<input type = "text" name = "smer" id = "smer"/>
+				
+				</p>
+				<p>
+				
+					<label for = "valuta">Sifra valute [filter]</label>
+					<input type = "text" name = "valuta" id = "valuta"/>
+				
+				</p>
+				<!--  
+				<div id = "formActions">
+					<input type = "submit" value = "Potvrda" style="margin-left:6em"/>
+					<a href = "#" style="margin-left:1em">Rollback</a>
+				</div>		
+				-->	
+				
+		</form>
+	</p>
+</div>
+
 <!-- 
   <div class="modal fade" id="nextModal" role="dialog">
     <div class="modal-dialog">
