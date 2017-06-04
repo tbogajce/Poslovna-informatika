@@ -113,7 +113,7 @@ public class Klijenti extends Controller{
 			for (play.data.validation.Error error : validation.errors()) {
 				System.out.println(error.message());
 				validation.keep();
-				show("add",null);
+				show("edit",null);
 			}
 		}
 		
