@@ -94,12 +94,9 @@ $(document).ready(function(){
 	<p>
 	
 		#{set 'action'}
-		  #{if mode == 'add'}
+		  
 		    @{ZatvaranjaRacuna.create()}
-		  #{/if}
-		  #{else}
-		    @{ZatvaranjaRacuna.filter()}
-		  #{/else}
+		  
 		#{/set}
 	
 		<form action=${action} method="post">

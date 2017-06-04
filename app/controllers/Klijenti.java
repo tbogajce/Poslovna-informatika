@@ -81,7 +81,7 @@ public class Klijenti extends Controller{
 		NaseljenoMesto nm = NaseljenoMesto.findById(klijent_naseljenoMesto);
 		Banka b = Banka.findById(klijent_banka);
 		System.out.println("JEL PRAVNO: "+klijent.getPravno());
-		if(klijent.getPravno()==true)
+		if(klijent.getPravno()!=null && klijent.getPravno()==true)
 		{
 			
 		}
