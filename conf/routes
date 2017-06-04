@@ -24,6 +24,13 @@ GET     /Racuni                                      Racuni.show
 GET     /Valute                                     Valute.show
 
 # Home page
+GET     /PravnaLica                                     PravnaLica.show
+
+# Home page
+GET     /SifarniciDelatnosti                                     SifarniciDelatnosti.show
+
+
+# Home page
 GET     /DnevnaStanjaRacuna                                      DnevnaStanjaRacuna.show
 
 # Home page
