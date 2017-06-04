@@ -82,6 +82,21 @@ public class PravnaLica extends Controller {
 	}
 
 	public static void create(PravnoLice pravnoLice, Long klijent, Long sifarnikDelatnosti) {
+		
+		validation.required(pravnoLice.pib);
+		validation.required(pravnoLice.odobrio);
+		validation.maxSize(pravnoLice.pib, 10);
+		validation.maxSize(pravnoLice.odobrio, 60);
+		validation.maxSize(pravnoLice.fax, 20);
+		
+		if (validation.hasErrors()) {
+			for (play.data.validation.Error error : validation.errors()) {
+				System.out.println(error.message());
+				validation.keep();
+				show("add",null);
+			}
+		}
+		
 		System.out.println("CREATE: " + pravnoLice.pib + ", " + pravnoLice.id);
 		Klijent klijentx = Klijent.findById(klijent);
 		SifarnikDelatnosti sifarnikDelatnostix = SifarnikDelatnosti.findById(sifarnikDelatnosti);
@@ -93,6 +108,20 @@ public class PravnaLica extends Controller {
 	}
 
 	public static void edit(PravnoLice pravnoLice, Long klijent, Long sifarnikDelatnosti) {
+		validation.required(pravnoLice.pib);
+		validation.required(pravnoLice.odobrio);
+		validation.maxSize(pravnoLice.pib, 10);
+		validation.maxSize(pravnoLice.odobrio, 60);
+		validation.maxSize(pravnoLice.fax, 20);
+		
+		if (validation.hasErrors()) {
+			for (play.data.validation.Error error : validation.errors()) {
+				System.out.println(error.message());
+				validation.keep();
+				show("add",null);
+			}
+		}
+		
 		System.out.println("EDIT: " + pravnoLice.pib + ", " + pravnoLice.id);
 		Klijent klijentx = Klijent.findById(klijent);
 		SifarnikDelatnosti sifarnikDelatnostix = SifarnikDelatnosti.findById(sifarnikDelatnosti);

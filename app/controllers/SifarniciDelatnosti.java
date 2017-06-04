@@ -19,6 +19,18 @@ public class SifarniciDelatnosti extends Controller {
 	
 	public static void create(SifarnikDelatnosti sifarnikDelatnosti )
 	{
+		validation.required(sifarnikDelatnosti.sifra);
+		validation.required(sifarnikDelatnosti.naziv);
+		validation.maxSize(sifarnikDelatnosti.sifra, 10);
+		validation.maxSize(sifarnikDelatnosti.naziv, 10);
+		if (validation.hasErrors()) {
+			for (play.data.validation.Error error : validation.errors()) {
+				System.out.println(error.message());
+				validation.keep();
+				show("add",null);
+			}
+		}
+		
 		System.out.println("CREATE: "+sifarnikDelatnosti.naziv+", "+sifarnikDelatnosti.id);
 		sifarnikDelatnosti.save();
 		show("add",sifarnikDelatnosti.id);
@@ -26,6 +38,18 @@ public class SifarniciDelatnosti extends Controller {
 	
 	public static void edit(SifarnikDelatnosti sifarnikDelatnosti)
 	{
+		validation.required(sifarnikDelatnosti.sifra);
+		validation.required(sifarnikDelatnosti.naziv);
+		validation.maxSize(sifarnikDelatnosti.sifra, 10);
+		validation.maxSize(sifarnikDelatnosti.naziv, 10);
+		if (validation.hasErrors()) {
+			for (play.data.validation.Error error : validation.errors()) {
+				System.out.println(error.message());
+				validation.keep();
+				show("add",null);
+			}
+		}
+		
 		System.out.println("EDIT: "+sifarnikDelatnosti.naziv+", "+sifarnikDelatnosti.id);
 		sifarnikDelatnosti.save();
 		show("edit",sifarnikDelatnosti.id);

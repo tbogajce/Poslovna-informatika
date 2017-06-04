@@ -85,6 +85,12 @@ function nextform(id)
 		    @{SifarniciDelatnosti.filter()}
 		  #{/else}
 		#{/set}
+		
+					#{ifErrors}
+					   <h4>Oops…</h4>
+					   <h6>Greska pri unosu</h6>
+					   <br>
+					#{/ifErrors}
 	
 		<form action=${action} method="post">
 		

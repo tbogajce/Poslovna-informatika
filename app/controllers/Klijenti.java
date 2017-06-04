@@ -55,6 +55,26 @@ public class Klijenti extends Controller{
 	
 	public static void create(Klijent klijent, Long klijent_naseljenoMesto, Long klijent_banka )
 	{
+		validation.required(klijent.jmbg);
+		validation.required(klijent.ime);
+		validation.required(klijent.prezime);
+		validation.maxSize(klijent.jmbg, 13);
+		validation.minSize(klijent.jmbg, 13);
+		
+		validation.maxSize(klijent.ime, 70);
+		validation.maxSize(klijent.prezime, 70);
+		validation.maxSize(klijent.adresa, 70);
+		validation.maxSize(klijent.telefon, 25);
+		validation.email(klijent.email);
+
+		if (validation.hasErrors()) {
+			for (play.data.validation.Error error : validation.errors()) {
+				System.out.println(error.message());
+				validation.keep();
+				show("add",null);
+			}
+		}
+		
 		System.out.println("CREATE: "+klijent.id+", "+klijent.jmbg);
 		//System.out.println("NAS MJ: "+ klijent.getNaseljenoMesto().getId());
 		System.out.println("NASELJENO MJESTO ID: "+klijent_naseljenoMesto);
@@ -77,13 +97,33 @@ public class Klijenti extends Controller{
 	
 	public static void edit(Klijent klijent,  Long klijent_naseljenoMesto, Long klijent_banka)
 	{
+		validation.required(klijent.jmbg);
+		validation.required(klijent.ime);
+		validation.required(klijent.prezime);
+		validation.maxSize(klijent.jmbg, 13);
+		validation.minSize(klijent.jmbg, 13);
+		
+		validation.maxSize(klijent.ime, 70);
+		validation.maxSize(klijent.prezime, 70);
+		validation.maxSize(klijent.adresa, 70);
+		validation.maxSize(klijent.telefon, 25);
+		validation.email(klijent.email);
+
+		if (validation.hasErrors()) {
+			for (play.data.validation.Error error : validation.errors()) {
+				System.out.println(error.message());
+				validation.keep();
+				show("add",null);
+			}
+		}
+		
 		System.out.println("EDIT: "+klijent.id+", "+klijent.jmbg);
 		NaseljenoMesto nm = NaseljenoMesto.findById(klijent_naseljenoMesto);
 		Banka b = Banka.findById(klijent_banka);
 		System.out.println("JEL PRAVNO: "+klijent.getPravno());
-		if(klijent.getPravno()!=null && klijent.getPravno()==true)
+		if(klijent.getPravno())
 		{
-			
+			klijent.setPravno(true);
 		}
 		else
 		{

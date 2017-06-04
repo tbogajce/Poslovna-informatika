@@ -100,6 +100,21 @@ public class Racuni extends Controller{
 	
 	public static void create(Racun racun/*, Long banka*/, Long klijent, Long valuta )
 	{
+		
+		validation.required(racun.brojRacuna);
+		validation.required(racun.status);
+		validation.required(racun.datumOtvaranja);
+		
+		validation.maxSize(racun.brojRacuna, 18);
+		
+		if (validation.hasErrors()) {
+			for (play.data.validation.Error error : validation.errors()) {
+				System.out.println(error.message());
+				validation.keep();
+				show("add",null);
+			}
+		}
+		
 		System.out.println("CREATE: "+racun.id+", "+racun.brojRacuna);
 		Klijent kl = Klijent.findById(klijent);
 		Banka b = kl.getBanka(); /*Banka.findById(banka);*/
@@ -113,6 +128,19 @@ public class Racuni extends Controller{
 	
 	public static void edit(Racun racun/*,  Long banka*/, Long klijent, Long valuta)
 	{
+		validation.required(racun.brojRacuna);
+		validation.required(racun.status);
+		validation.required(racun.datumOtvaranja);
+		
+		validation.maxSize(racun.brojRacuna, 18);
+		
+		if (validation.hasErrors()) {
+			for (play.data.validation.Error error : validation.errors()) {
+				System.out.println(error.message());
+				validation.keep();
+				show("add",null);
+			}
+		}
 		
 		Klijent kl = Klijent.findById(klijent);
 		Banka b = kl.getBanka(); /*Banka.findById(banka);*/

@@ -84,7 +84,14 @@ function nextform(id)
 		    @{Drzave.filter()}
 		  #{/else}
 		#{/set}
-	
+		
+					#{ifErrors}
+					   <h4>Oops…</h4>
+					   <h6>Greska pri unosu</h6>
+					   <br>
+					#{/ifErrors}
+		
+		
 		<form action=${action} method="post">
 		
 				#{field 'drzava.id'}
@@ -95,12 +102,14 @@ function nextform(id)
 				#{field 'drzava.oznaka'}
 					<label for = "${field.id}">Oznaka</label>
 					<input type = "text" name = "${field.name}" id = "${field.id}"/>
+					<span class="error">#{error field.name /}</span>
 				#{/}
 				</p>
 				<p>
 				#{field 'drzava.naziv'}
 					<label for = "${field.id}">Naziv</label>
 					<input type = "text" name = "${field.name}" id = "${field.id}"/>
+					<span>#{error field.name /}</span>
 				#{/}
 				</p>
 				<div id = "formActions">

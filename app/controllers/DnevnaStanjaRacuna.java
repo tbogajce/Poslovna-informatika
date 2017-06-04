@@ -51,6 +51,20 @@ public class DnevnaStanjaRacuna extends Controller{
 	
 	public static void create(DnevnoStanjeRacuna dnevnoStanjeRacuna, Long racun)
 	{
+//		validation.required(dnevnoStanjeRacuna.datum);
+//		validation.required(dnevnoStanjeRacuna.prethodnoStanje);
+//		validation.required(dnevnoStanjeRacuna.prometNaTeret);
+//		validation.required(dnevnoStanjeRacuna.prometUKorist);
+//		validation.required(dnevnoStanjeRacuna.novoStanje);
+//
+//		if (validation.hasErrors()) {
+//			for (play.data.validation.Error error : validation.errors()) {
+//				System.out.println(error.message());
+//				validation.keep();
+//				show("add",null);
+//			}
+//		}
+		
 		System.out.println("EDIT: "+dnevnoStanjeRacuna.id);
 		Racun racunx = Racun.findById(racun);
 		dnevnoStanjeRacuna.racun=racunx;
@@ -60,6 +74,21 @@ public class DnevnaStanjaRacuna extends Controller{
 	
 	public static void edit(DnevnoStanjeRacuna dnevnoStanjeRacuna, Long racun)
 	{
+//		validation.required(dnevnoStanjeRacuna.datum);
+//		validation.required(dnevnoStanjeRacuna.prethodnoStanje);
+//		validation.required(dnevnoStanjeRacuna.prometNaTeret);
+//		validation.required(dnevnoStanjeRacuna.prometUKorist);
+//		validation.required(dnevnoStanjeRacuna.novoStanje);
+//
+//		if (validation.hasErrors()) {
+//			for (play.data.validation.Error error : validation.errors()) {
+//				System.out.println(error.message());
+//				validation.keep();
+//				show("add",null);
+//			}
+//		}
+		
+		
 		System.out.println("EDIT: "+dnevnoStanjeRacuna.id);
 		Racun racunx = Racun.findById(racun);
 		dnevnoStanjeRacuna.racun=racunx;

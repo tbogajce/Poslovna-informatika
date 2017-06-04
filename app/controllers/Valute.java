@@ -18,6 +18,18 @@ public class Valute extends Controller {
 	
 	public static void create(Valuta valuta )
 	{
+		validation.required(valuta.sifra);
+		validation.required(valuta.naziv);
+		validation.maxSize(valuta.sifra, 3);
+		validation.maxSize(valuta.naziv, 30);
+		if (validation.hasErrors()) {
+			for (play.data.validation.Error error : validation.errors()) {
+				System.out.println(error.message());
+				validation.keep();
+				show("add",null);
+			}
+		}
+		
 		System.out.println("CREATE: "+valuta.naziv+", "+valuta.id);
 		valuta.save();
 		show("add",valuta.id);
@@ -25,6 +37,18 @@ public class Valute extends Controller {
 	
 	public static void edit(Valuta valuta)
 	{
+		validation.required(valuta.sifra);
+		validation.required(valuta.naziv);
+		validation.maxSize(valuta.sifra, 3);
+		validation.maxSize(valuta.naziv, 30);
+		if (validation.hasErrors()) {
+			for (play.data.validation.Error error : validation.errors()) {
+				System.out.println(error.message());
+				validation.keep();
+				show("add",null);
+			}
+		}
+		
 		System.out.println("EDIT: "+valuta.naziv+", "+valuta.id);
 		valuta.save();
 		show("edit",valuta.id);
