@@ -5,7 +5,9 @@ import java.util.List;
 
 import models.AnalitikaIzvoda;
 import models.DnevnoStanjeRacuna;
+import models.Drzava;
 import models.Klijent;
+import models.NaseljenoMesto;
 import models.Racun;
 import models.ZatvaranjeRacuna;
 import play.mvc.Controller;
@@ -16,10 +18,24 @@ public class ZatvaranjaRacuna extends Controller{
 	{
 		
 		List<ZatvaranjeRacuna> zatvaranjaRacuna = ZatvaranjeRacuna.findAll();
+		List<Racun> racuni = Racun.findAll();
+		List<AnalitikaIzvoda> analitikeIzvoda = AnalitikaIzvoda.findAll();
 		if(mode == null || mode.equals(""))
 			mode = "edit";
-		render(zatvaranjaRacuna,mode,selectedId);
+		render(zatvaranjaRacuna,racuni, analitikeIzvoda, mode,selectedId);
 	}
+	
+	public static void create(ZatvaranjeRacuna zatvaranjeRacuna, Long racun)
+	{
+		System.out.println("RACUN ID JE " + racun);
+		Racun racun1 = Racun.findById(racun);
+		zatvaranjeRacuna.racun=racun1;
+		zatvaranjeRacuna.save();
+		show("add",zatvaranjeRacuna.id);
+	}
+	
+
+	
 	
 	public static void filter(String filterx)
 	{
