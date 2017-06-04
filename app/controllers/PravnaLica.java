@@ -11,11 +11,11 @@ public class PravnaLica extends Controller {
 
 	public static void show(String mode, Long selectedIndex) {
 		List<Klijent> klijenti = Klijent.findAll();
-		List<SifarnikDelatnosti> sifarnikDelatnosti = SifarnikDelatnosti.findAll();
+		List<SifarnikDelatnosti> sifarniciDelatnosti = SifarnikDelatnosti.findAll();
 		List<PravnoLice> pravnaLica = PravnoLice.findAll();
 		if (mode == null || mode.equals(""))
 			mode = "edit";
-		render(klijenti, sifarnikDelatnosti, pravnaLica, mode, selectedIndex);
+		render(klijenti, sifarniciDelatnosti, pravnaLica, mode, selectedIndex);
 	}
 
 	public static void create(PravnoLice pravnoLice, Long klijent, Long sifarnikDelatnosti) {

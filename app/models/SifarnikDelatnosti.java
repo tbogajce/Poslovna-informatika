@@ -33,6 +33,12 @@ public class SifarnikDelatnosti extends Model{
 		this.pravnaLica = pravnaLica;
 	}
 
+	public SifarnikDelatnosti(String sifra, String naziv) {
+		super();
+		this.sifra = sifra;
+		this.naziv = naziv;
+	}
+
 	public String getSifra() {
 		return sifra;
 	}
