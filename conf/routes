@@ -21,6 +21,9 @@ GET     /Banke                                      Banke.show
 GET     /Racuni                                      Racuni.show
 
 # Home page
+GET     /Valute                                     Valute.show
+
+# Home page
 GET     /DnevnaStanjaRacuna                                      DnevnaStanjaRacuna.show
 
 # Home page
