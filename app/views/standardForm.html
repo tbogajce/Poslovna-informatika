@@ -13,6 +13,13 @@ $(document).ready(function(){
 		id = highlighted.find(".id").html();
 		remove(id);
 	})
+	
+	$("#sendReport").click(function()
+		{
+		highlighted=$(".highlighted");
+		id = highlighted.find(".id").html();
+		sendReportFun(id);
+	})
 
   $("tr").click(function() {
  	 //ne reagujemo na klik na header tabele, samo obicne redove

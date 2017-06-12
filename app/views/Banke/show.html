@@ -70,6 +70,10 @@ function remove(id)
 	
 }
 
+function sendReportFun(id) {
+	$(location).attr('href','/Banke/exportToPdf?id='+id);
+}
+
 function nextform(id)
 {
 	//$(location).attr('href','/NaseljenaMesta/nextMehanizam?id='+id);
@@ -176,6 +180,7 @@ function nextform(id)
 				<div id = "formActions">
 					<input type = "submit" value = "Potvrda" style="margin-left:6em"/>
 					<a href = "#" style="margin-left:1em">Rollback</a>
+					<a href="#" id="sendReport" style="margin-left:1em">Izvestaj banke</a>
 				</div>			
 				
 		</form>
