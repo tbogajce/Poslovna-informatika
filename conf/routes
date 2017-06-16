@@ -3,7 +3,7 @@
 # ~~~~
 
 # Home page
-GET     /                                       Application.index
+GET     /                                       Logovanje.show
 
 # Home page
 GET     /Drzave                                      Drzave.show
@@ -50,6 +50,9 @@ GET     /UcitavanjeNalogaZaPrenos                       UcitavanjeNalogaZaPrenos
 
 # Home page
 GET     /MedjubankarskiPrenosi                       MedjubankarskiPrenosii.show
+
+# Home page
+GET     /Index                       Index.show
 
 
 # Ignore favicon requests

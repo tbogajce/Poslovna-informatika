@@ -16,11 +16,31 @@ public class AnalitikeIzvoda extends Controller{
 	
 	public static void show(String mode, Long selectedId)
 	{
-		List<DnevnoStanjeRacuna> dnevnaStanjaRacuna = DnevnoStanjeRacuna.findAll();
-		List<AnalitikaIzvoda> analitikeIzvoda = AnalitikaIzvoda.findAll();
-		if(mode == null || mode.equals(""))
-			mode = "edit";
-		render(dnevnaStanjaRacuna,analitikeIzvoda,mode,selectedId);
+		if(session.get("banka_id")!=null)
+		{
+			List<DnevnoStanjeRacuna> dnevnaStanjaRacuna = DnevnoStanjeRacuna.findAll();
+			List<AnalitikaIzvoda> analitikeIzvodax = AnalitikaIzvoda.findAll();
+			ArrayList<AnalitikaIzvoda> analitikeIzvoda = new ArrayList<AnalitikaIzvoda>();
+			for(AnalitikaIzvoda ai : analitikeIzvodax)
+			{
+				if(ai.getDnevnoStanjeRacuna().getRacun().getBanka().getId()==Long.valueOf(session.get("banka_id")))
+				{
+					analitikeIzvoda.add(ai);
+				}
+			}
+			if(mode == null || mode.equals(""))
+				mode = "edit";
+			render(dnevnaStanjaRacuna,analitikeIzvoda,mode,selectedId);
+		}
+		else
+		{
+			List<DnevnoStanjeRacuna> dnevnaStanjaRacuna = DnevnoStanjeRacuna.findAll();
+			List<AnalitikaIzvoda> analitikeIzvoda = AnalitikaIzvoda.findAll();
+			if(mode == null || mode.equals(""))
+				mode = "edit";
+			render(dnevnaStanjaRacuna,analitikeIzvoda,mode,selectedId);
+		}
+		
 	}
 	
 	

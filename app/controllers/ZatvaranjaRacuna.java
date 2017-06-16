@@ -38,13 +38,34 @@ public class ZatvaranjaRacuna extends Controller{
 	
 	public static void show(String mode, Long selectedId)
 	{
+		if(session.get("banka_id")!=null)
+		{
+			List<ZatvaranjeRacuna> zatvaranjaRacunax = ZatvaranjeRacuna.findAll();
+			ArrayList<ZatvaranjeRacuna> zatvaranjaRacuna = new ArrayList<ZatvaranjeRacuna>();
+			for(ZatvaranjeRacuna zr : zatvaranjaRacunax)
+			{
+				if(zr.getRacun().getBanka().getId() == Long.valueOf(session.get("banka_id")))
+				{
+					zatvaranjaRacuna.add(zr);
+				}
+			}
+			List<Racun> racuni = Racun.findAll();
+			List<AnalitikaIzvoda> analitikeIzvoda = AnalitikaIzvoda.findAll();
+			if(mode == null || mode.equals(""))
+				mode = "edit";
+			render(zatvaranjaRacuna,racuni, analitikeIzvoda, mode,selectedId);
+		}
+		else
+		{
+			List<ZatvaranjeRacuna> zatvaranjaRacuna = ZatvaranjeRacuna.findAll();
+			List<Racun> racuni = Racun.findAll();
+			List<AnalitikaIzvoda> analitikeIzvoda = AnalitikaIzvoda.findAll();
+			if(mode == null || mode.equals(""))
+				mode = "edit";
+			render(zatvaranjaRacuna,racuni, analitikeIzvoda, mode,selectedId);
+		}
 		
-		List<ZatvaranjeRacuna> zatvaranjaRacuna = ZatvaranjeRacuna.findAll();
-		List<Racun> racuni = Racun.findAll();
-		List<AnalitikaIzvoda> analitikeIzvoda = AnalitikaIzvoda.findAll();
-		if(mode == null || mode.equals(""))
-			mode = "edit";
-		render(zatvaranjaRacuna,racuni, analitikeIzvoda, mode,selectedId);
+		
 	}
 	
 	public static void create(ZatvaranjeRacuna zatvaranjeRacuna, Long racun)
@@ -324,8 +345,9 @@ public class ZatvaranjaRacuna extends Controller{
 					//Double iznos = Double.parseDouble(izn);
 					Banka bankaPosiljalac = racun1.getBanka();
 					Banka bankaPrimalac = racun2.getBanka();
-					MedjubankarskiPrenos mbp = new MedjubankarskiPrenos("MT103", datum, iznos, bankaPosiljalac, bankaPrimalac);
-					
+					System.out.println("IZNOS x3: "+iznos);
+					MedjubankarskiPrenos mbp = new MedjubankarskiPrenos("MT103", datum, iznos,true, bankaPosiljalac, bankaPrimalac);
+					mbp._save();
 					StavkePrenosa sp = new StavkePrenosa(aix,mbp);
 					sp.save();
 					//i sada snimiti taj objekat
@@ -384,7 +406,8 @@ public class ZatvaranjaRacuna extends Controller{
 					//Double iznos = Double.parseDouble(izn);
 					Banka bankaPosiljalac = racun1.getBanka();
 					Banka bankaPrimalac = racun2.getBanka();
-					MedjubankarskiPrenos mbp = new MedjubankarskiPrenos("MT103", datum, iznos, bankaPosiljalac, bankaPrimalac);
+					System.out.println("IZNOS x4: "+iznos);
+					MedjubankarskiPrenos mbp = new MedjubankarskiPrenos("MT103", datum, iznos,false, bankaPosiljalac, bankaPrimalac);
 					
 					mbp._save();
 					StavkePrenosa sp = new StavkePrenosa(aix,mbp);

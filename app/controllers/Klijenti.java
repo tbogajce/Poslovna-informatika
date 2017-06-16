@@ -14,12 +14,33 @@ public class Klijenti extends Controller{
 	
 	public static void show(String mode, Long selectedIndex)
 	{
-		List<NaseljenoMesto> naseljenaMesta = NaseljenoMesto.findAll();
-		List<Banka> banke = Banka.findAll();
-		List<Klijent> klijenti = Klijent.findAll();
-		if(mode == null || mode.equals(""))
-			mode = "edit";
-		render(klijenti, naseljenaMesta, banke,mode,selectedIndex);
+		if(session.get("banka_id")!=null)
+		{
+			List<NaseljenoMesto> naseljenaMesta = NaseljenoMesto.findAll();
+			List<Banka> banke = Banka.findAll();
+			List<Klijent> klijentix = Klijent.findAll();
+			ArrayList<Klijent> klijenti = new ArrayList<Klijent>();
+			for(Klijent k : klijentix)
+			{
+				if(k.getBanka().getId()==Long.valueOf(session.get("banka_id")))
+				{
+					klijenti.add(k);
+				}
+			}
+			if(mode == null || mode.equals(""))
+				mode = "edit";
+			render(klijenti, naseljenaMesta, banke,mode,selectedIndex);
+		}
+		else
+		{
+			List<NaseljenoMesto> naseljenaMesta = NaseljenoMesto.findAll();
+			List<Banka> banke = Banka.findAll();
+			List<Klijent> klijenti = Klijent.findAll();
+			if(mode == null || mode.equals(""))
+				mode = "edit";
+			render(klijenti, naseljenaMesta, banke,mode,selectedIndex);
+		}
+		
 	}
 	
 	

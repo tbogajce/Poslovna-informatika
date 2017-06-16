@@ -29,6 +29,7 @@ import models.Banka;
 import models.DnevnoStanjeRacuna;
 import models.MedjubankarskiPrenos;
 import models.Racun;
+import models.StavkePrenosa;
 import play.mvc.Controller;
 
 public class UcitavanjeNalogaZaPrenos extends Controller{
@@ -151,6 +152,7 @@ public class UcitavanjeNalogaZaPrenos extends Controller{
 			{
 				Racun racun1 = racuni1.get(0);
 				Racun racun2 = racuni2.get(0);
+				AnalitikaIzvoda aix=new AnalitikaIzvoda();
 				
 				String banka_id = session.get("banka_id");
 				
@@ -235,7 +237,7 @@ public class UcitavanjeNalogaZaPrenos extends Controller{
 						e.printStackTrace();
 					}
 					
-					AnalitikaIzvoda ai = new AnalitikaIzvoda(date,'-',nalogZaPrenos.getPodaciODuzniku().getIme()+" "+nalogZaPrenos.getPodaciODuzniku().getPrezime(),
+					aix = new AnalitikaIzvoda(date,'-',nalogZaPrenos.getPodaciODuzniku().getIme()+" "+nalogZaPrenos.getPodaciODuzniku().getPrezime(),
 							nalogZaPrenos.getSvrhaPlacanja(),nalogZaPrenos.getPodaciOPoveriocu().getNaziv(),
 							datumAnal,datumAnal,nalogZaPrenos.getTransferPodaciDuznik().getRacunDuznika(),
 							nalogZaPrenos.getTransferPodaciDuznik().getModel(),
@@ -245,7 +247,7 @@ public class UcitavanjeNalogaZaPrenos extends Controller{
 							nalogZaPrenos.getTransferPodaciPoverioc().getPozivNaBrojPoverioca(),
 							iznos,nalogZaPrenos.getPodaciOPrenosu().getValuta(),dsr);
 					
-					ai.save();
+					aix.save();
 					
 					
 				}
@@ -374,7 +376,11 @@ public class UcitavanjeNalogaZaPrenos extends Controller{
 						Double iznos = Double.parseDouble(izn);
 						Banka bankaPosiljalac = racun1.getBanka();
 						Banka bankaPrimalac = racun2.getBanka();
-						MedjubankarskiPrenos mbp = new MedjubankarskiPrenos("MT103", datum, iznos, bankaPosiljalac, bankaPrimalac);
+						System.out.println("IZNOS x1: "+iznos);
+						MedjubankarskiPrenos mbp = new MedjubankarskiPrenos("MT103", datum, iznos,true, bankaPosiljalac, bankaPrimalac);
+						mbp._save();
+						StavkePrenosa sp = new StavkePrenosa(aix,mbp);
+						sp.save();
 						//i sada snimiti taj objekat
 						//MARSHALLING
 						try {
@@ -428,11 +434,15 @@ public class UcitavanjeNalogaZaPrenos extends Controller{
 						Date date = new Date();
 						String datum = dateFormat.format(date);
 						String izn = nalogZaPrenos.getPodaciOPrenosu().getIznos();
+						
 						Double iznos = Double.parseDouble(izn);
+						System.out.println("IZNOS x2: "+iznos);
 						Banka bankaPosiljalac = racun1.getBanka();
 						Banka bankaPrimalac = racun2.getBanka();
-						MedjubankarskiPrenos mbp = new MedjubankarskiPrenos("MT103", datum, iznos, bankaPosiljalac, bankaPrimalac);
+						MedjubankarskiPrenos mbp = new MedjubankarskiPrenos("MT103", datum, iznos,false, bankaPosiljalac, bankaPrimalac);
 						mbp._save();
+						StavkePrenosa sp = new StavkePrenosa(aix,mbp);
+						sp.save();
 					}
 					
 					

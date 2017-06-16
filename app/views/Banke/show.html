@@ -32,6 +32,20 @@ $(document).ready(function(){
 				id = highlighted.find(".id").html();
 				nextform2(id);
 			});
+	$("#nextform1b").click(function()
+			{
+				console.log("DOSLO 1");
+				highlighted=$(".highlighted");
+				id = highlighted.find(".id").html();
+				nextform1b(id);
+			});
+	$("#nextform2b").click(function()
+			{
+				console.log("DOSLO 2");
+				highlighted=$(".highlighted");
+				id = highlighted.find(".id").html();
+				nextform2b(id);
+			});
 	$("#nextform3").click(function()
 			{
 				console.log("DOSLO 3");
@@ -43,12 +57,20 @@ $(document).ready(function(){
 
 function nextform1(id)
 {
-	$(location).attr('href','/MedjubankarskiPrenosii/nextMehanizam?id='+id+'&sta=bpos');
+	$(location).attr('href','/MedjubankarskiPrenosii/nextMehanizam?id='+id+'&sta=bpri'+'&kako=rtgs');
+}
+function nextform1b(id)
+{
+	$(location).attr('href','/MedjubankarskiPrenosii/nextMehanizam?id='+id+'&sta=bpri'+'&kako=clearing');
 }
 	
 function nextform2(id)
 {
-	$(location).attr('href','/MedjubankarskiPrenosii/nextMehanizam?id='+id+'&sta=bpri');
+	$(location).attr('href','/MedjubankarskiPrenosii/nextMehanizam?id='+id+'&sta=bpos'+'&kako=rtgs');
+}
+function nextform2b(id)
+{
+	$(location).attr('href','/MedjubankarskiPrenosii/nextMehanizam?id='+id+'&sta=bpos'+'&kako=clearing');
 }
 
 function nextform3(id)
@@ -95,9 +117,11 @@ function nextform(id)
   <li><a id = "last"><img src="@{'/public/images/last.gif'}"/></a></li>
   <li><a href="@{Banke.show("add",null)}" id = "add"><img src="@{'/public/images/add.gif'}"/></a></li>
   <li><a href="#" id = "remove"><img src="@{'/public/images/remove.gif'}"/></a></li>
-  <li><a href="#" id = "nextform1">BPRI<img src="@{'/public/images/nextform.gif'}"/></a></li>
-  <li><a href="#" id = "nextform2">BPOS<img src="@{'/public/images/nextform.gif'}"/></a></li>
-  <li><a href="#" id = "nextform3">R<img src="@{'/public/images/nextform.gif'}"/></a></li>
+  <li><a href="#" id = "nextform1">BPRI MP RTGS<img src="@{'/public/images/nextform.gif'}"/></a></li>
+  <li><a href="#" id = "nextform1b">BPRI MP CL<img src="@{'/public/images/nextform.gif'}"/></a></li>
+  <li><a href="#" id = "nextform2">BPOS MP RTGS<img src="@{'/public/images/nextform.gif'}"/></a></li>
+  <li><a href="#" id = "nextform2b">BPOS MP CL<img src="@{'/public/images/nextform.gif'}"/></a></li>
+  <li><a href="#" id = "nextform3">RAC<img src="@{'/public/images/nextform.gif'}"/></a></li>
 </ul>
 </p>
 
@@ -140,7 +164,7 @@ function nextform(id)
 		#{/set}
 					
 					#{ifErrors}
-					   <h4>Oops…</h4>
+					   <h4>Oopsï¿½</h4>
 					   <h6>Greska pri unosu</h6>
 					   <br>
 					#{/ifErrors}

@@ -41,7 +41,7 @@ public class Logovanje extends Controller{
 				String mode = "";
 				System.out.println("Doslo do ovde");
 				//renderTemplate("UcitavanjeNalogaZaPrenos/show.html", mode );
-				UcitavanjeNalogaZaPrenos.show(mode);
+				Index.show();
 				return;
 			}
 		}

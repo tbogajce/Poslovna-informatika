@@ -96,15 +96,17 @@ function sync(item){
 	   <th>Iznos</th>
 	   <th>Banka Posiljalac</th>
 	   <th>Banka Primalac</th>
+	   <th>RTGS?</th>
 	</tr>
 	
 #{list items:medjubankarskiPrenosi, as:'mp'}
-	<tr #{if analitikaIzvoda.id == selectedIndex} class = "highlighted trww" #{/if} class="trww">
-		<td class = "ai_datumAnalitike">${mp.vrstaPoruke}</td>
-		<td class = "ai_smer">${mp.datum}</td>
-		<td class = "ai_duznik">${mp.iznos}</td>
-		<td class = "ai_svrhaPlacanja">${mp.bankaPosiljalac.naziv}</td>
-		<td class = "ai_primaoc">${mp.bankaPrimalac.naziv}</td>
+	<tr #{if mp.id == selectedIndex} class = "highlighted trww" #{/if} class="trww">
+		<td class = "mp_datumAnalitike">${mp.vrstaPoruke}</td>
+		<td class = "mp_smer">${mp.datum}</td>
+		<td class = "mp_duznik">${mp.iznos}</td>
+		<td class = "mp_svrhaPlacanja">${mp.bankaPosiljalac.nazivBanke}</td>
+		<td class = "mp_primaoc">${mp.bankaPrimalac.nazivBanke}</td>
+		<td class = "mp_rtgs">${mp.isRtgs}</td>
 		
 		<td style = "visibility: hidden; max-width: 0px" class = "id">${mp.id}</td>
 	</tr>

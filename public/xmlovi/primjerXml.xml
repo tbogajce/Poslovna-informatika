@@ -15,19 +15,19 @@
         <podaci_o_prenosu>
             <sifra_placanja>123</sifra_placanja>
             <valuta>rsd</valuta>
-            <iznos>2500</iznos>
+            <iznos>400000</iznos>
         </podaci_o_prenosu>
         <transfer_podaci_duznik>
-            <racun_duznika>333</racun_duznika>
+            <racun_duznika>511</racun_duznika>
             <model>54</model>
             <poziv_na_broj_duznika>26265-223-2323</poziv_na_broj_duznika>
         </transfer_podaci_duznik>
         <transfer_podaci_poverioc>
-            <racun_poverioca>111</racun_poverioca>
+            <racun_poverioca>522</racun_poverioca>
             <model>87</model>
             <poziv_na_broj_poverioca>58</poziv_na_broj_poverioca>
         </transfer_podaci_poverioc>
-        <hitno>0</hitno>
+        <hitno>1</hitno>
         <datum_valute>2017-06-04</datum_valute>
     </nalog_za_prenos>
       <nalog_za_prenos>
@@ -46,12 +46,12 @@
             <iznos>15000</iznos>
         </podaci_o_prenosu>
         <transfer_podaci_duznik>
-            <racun_duznika>333</racun_duznika>
+            <racun_duznika>511</racun_duznika>
             <model>54</model>
             <poziv_na_broj_duznika>26265-223-2323</poziv_na_broj_duznika>
         </transfer_podaci_duznik>
         <transfer_podaci_poverioc>
-            <racun_poverioca>111</racun_poverioca>
+            <racun_poverioca>522</racun_poverioca>
             <model>87</model>
             <poziv_na_broj_poverioca>58</poziv_na_broj_poverioca>
         </transfer_podaci_poverioc>
@@ -72,15 +72,15 @@
         <podaci_o_prenosu>
             <sifra_placanja>123</sifra_placanja>
             <valuta>rsd</valuta>
-            <iznos>20000</iznos>
+            <iznos>70000</iznos>
         </podaci_o_prenosu>
         <transfer_podaci_duznik>
-            <racun_duznika>333</racun_duznika>
+            <racun_duznika>511</racun_duznika>
             <model>54</model>
             <poziv_na_broj_duznika>26265-223-2323</poziv_na_broj_duznika>
         </transfer_podaci_duznik>
         <transfer_podaci_poverioc>
-            <racun_poverioca>111</racun_poverioca>
+            <racun_poverioca>522</racun_poverioca>
             <model>87</model>
             <poziv_na_broj_poverioca>58</poziv_na_broj_poverioca>
         </transfer_podaci_poverioc>

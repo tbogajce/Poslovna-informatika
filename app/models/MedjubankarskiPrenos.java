@@ -22,6 +22,9 @@ public class MedjubankarskiPrenos extends Model{
 	@Column(nullable = false)
 	public Double iznos;
 	
+	@Column(nullable = false)
+	public Boolean isRtgs;
+	
 	@ManyToOne
 	private Banka bankaPosiljalac;
 	
@@ -39,7 +42,7 @@ public class MedjubankarskiPrenos extends Model{
 
 
 	
-
+/*
 	public MedjubankarskiPrenos(String vrstaPoruke, String datum, Double iznos, Banka bankaPosiljalac,
 			Banka bankaPrimalac) {
 		super();
@@ -49,6 +52,48 @@ public class MedjubankarskiPrenos extends Model{
 		this.bankaPosiljalac = bankaPosiljalac;
 		this.bankaPrimalac = bankaPrimalac;
 	}
+	*/
+	
+
+
+
+	public MedjubankarskiPrenos(String vrstaPoruke, String datum, Double iznos, boolean isRtgs, Banka bankaPosiljalac,
+			Banka bankaPrimalac) {
+		super();
+		this.vrstaPoruke = vrstaPoruke;
+		this.datum = datum;
+		this.iznos = iznos;
+		this.isRtgs = isRtgs;
+		this.bankaPosiljalac = bankaPosiljalac;
+		this.bankaPrimalac = bankaPrimalac;
+	}
+
+
+
+
+
+
+
+
+	public boolean isRtgs() {
+		return isRtgs;
+	}
+
+
+
+
+
+
+
+
+	public void setRtgs(boolean isRtgs) {
+		this.isRtgs = isRtgs;
+	}
+
+
+
+
+
 
 
 

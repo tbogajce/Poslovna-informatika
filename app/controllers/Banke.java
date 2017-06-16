@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.text.SimpleDateFormat;
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -14,18 +15,38 @@ import java.util.Properties;
 
 import models.Banka;
 import models.Drzava;
-import net.sf.jasperreports.engine.JasperExportManager;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
+//import net.sf.jasperreports.engine.JasperExportManager;
+//import net.sf.jasperreports.engine.JasperFillManager;
+//import net.sf.jasperreports.engine.JasperPrint;
 import play.mvc.Controller;
 
 public class Banke extends Controller {
 
 	public static void show(String mode, Long selectedIndex) {
-		List<Banka> banke = Banka.findAll();
-		if (mode == null || mode.equals(""))
-			mode = "edit";
-		render(banke, mode, selectedIndex);
+		if(session.get("banka_id")!=null)
+		{
+			
+			List<Banka> bankex = Banka.findAll();
+			ArrayList<Banka> banke =new ArrayList<Banka>();
+			for(Banka b: bankex)
+			{
+				if(b.getId()==Long.valueOf(session.get("banka_id")))
+				{
+					banke.add(b);
+				}
+			}
+			if (mode == null || mode.equals(""))
+				mode = "edit";
+			render(banke, mode, selectedIndex);
+		}
+		else
+		{
+			List<Banka> banke = Banka.findAll();
+			if (mode == null || mode.equals(""))
+				mode = "edit";
+			render(banke, mode, selectedIndex);
+		}
+		
 	}
 
 	public static void create(Banka banka) {
@@ -90,7 +111,7 @@ public class Banke extends Controller {
 		ban.delete();
 		show("edit", ban.id - 1);
 	}
-
+/*
 	public void exportToPdf(Long id) {
 		try {
 			Banka bank = Banka.findById(id);
@@ -124,5 +145,6 @@ public class Banke extends Controller {
 			System.out.println("Umro laptop");
 		}
 	}
+	*/
 
 }

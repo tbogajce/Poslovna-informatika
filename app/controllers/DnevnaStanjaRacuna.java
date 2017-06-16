@@ -14,11 +14,31 @@ public class DnevnaStanjaRacuna extends Controller{
 	
 	public static void show(String mode, Long selectedId)
 	{
-		List<Racun> racuni = Racun.findAll();
-		List<DnevnoStanjeRacuna> dnevnaStanjaRacuna = DnevnoStanjeRacuna.findAll();
-		if(mode == null || mode.equals(""))
-			mode = "edit";
-		render(racuni,dnevnaStanjaRacuna,mode,selectedId);
+		if(session.get("banka_id")!=null)
+		{
+			List<Racun> racuni = Racun.findAll();
+			List<DnevnoStanjeRacuna> dnevnaStanjaRacunax = DnevnoStanjeRacuna.findAll();
+			ArrayList<DnevnoStanjeRacuna> dnevnaStanjaRacuna = new ArrayList<DnevnoStanjeRacuna>();
+			for(DnevnoStanjeRacuna dsr : dnevnaStanjaRacunax)
+			{
+				if(dsr.getRacun().getBanka().getId()==Long.valueOf(session.get("banka_id")))
+				{
+					dnevnaStanjaRacuna.add(dsr);
+				}
+			}
+			if(mode == null || mode.equals(""))
+				mode = "edit";
+			render(racuni,dnevnaStanjaRacuna,mode,selectedId);
+		}
+		else
+		{
+			List<Racun> racuni = Racun.findAll();
+			List<DnevnoStanjeRacuna> dnevnaStanjaRacuna = DnevnoStanjeRacuna.findAll();
+			if(mode == null || mode.equals(""))
+				mode = "edit";
+			render(racuni,dnevnaStanjaRacuna,mode,selectedId);
+		}
+		
 	}
 	
 	

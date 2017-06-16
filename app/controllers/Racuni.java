@@ -13,13 +13,35 @@ public class Racuni extends Controller{
 		
 	public static void show(String mode, Long selectedIndex)
 	{
-		List<Klijent> klijenti = Klijent.findAll();
-		List<Banka> banke = Banka.findAll();
-		List<Racun> racuni = Racun.findAll();
-		List<Valuta> valute = Valuta.findAll();
-		if(mode == null || mode.equals(""))
-			mode = "edit";
-		render(racuni, klijenti, banke,valute,mode,selectedIndex);
+		if(session.get("banka_id")!=null)
+		{
+			
+			List<Klijent> klijenti = Klijent.findAll();
+			List<Banka> banke = Banka.findAll();
+			List<Racun> racunix = Racun.findAll();
+			ArrayList<Racun> racuni = new ArrayList<Racun>();
+			for(Racun r: racunix)
+			{
+				if(r.getBanka().getId()==Long.valueOf(session.get("banka_id")))
+				{
+					racuni.add(r);
+				}
+			}
+			List<Valuta> valute = Valuta.findAll();
+			if(mode == null || mode.equals(""))
+				mode = "edit";
+			render(racuni, klijenti, banke,valute,mode,selectedIndex);
+		}
+		else
+		{
+			List<Klijent> klijenti = Klijent.findAll();
+			List<Banka> banke = Banka.findAll();
+			List<Racun> racuni = Racun.findAll();
+			List<Valuta> valute = Valuta.findAll();
+			if(mode == null || mode.equals(""))
+				mode = "edit";
+			render(racuni, klijenti, banke,valute,mode,selectedIndex);
+		}
 	}
 	
 	public static void nextMehanizam(Long id,String sta)
