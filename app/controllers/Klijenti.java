@@ -1,13 +1,28 @@
 package controllers;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 
 import models.AnalitikaIzvoda;
 import models.Banka;
 import models.DnevnoStanjeRacuna;
 import models.Klijent;
 import models.NaseljenoMesto;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
 import play.mvc.Controller;
 
 public class Klijenti extends Controller{
@@ -174,4 +189,40 @@ public class Klijenti extends Controller{
 		kli.delete();
 		show("edit", kli.id-1);
 	}
+	
+	public void exportToPdf(Long id,String dod, String ddo) {
+		try {
+			Klijent klijent = Klijent.findById(id);
+
+			Properties connectionProps = new Properties();
+
+			connectionProps.put("user", "root");
+			connectionProps.put("password", "cuko");
+
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/poslovna", connectionProps);
+			
+			dod = dod+" 00:00:00";
+			ddo = ddo+" 00:00:00";
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			Date parsedDate1 = dateFormat.parse(dod);
+			Date parsedDate2 = dateFormat.parse(ddo);
+			Timestamp timestamp1 = new java.sql.Timestamp(parsedDate1.getTime());
+			Timestamp timestamp2 = new java.sql.Timestamp(parsedDate2.getTime());
+			
+			Map<String, Object> parameters = new HashMap<String, Object>();
+			parameters.put("ID_Klijent", klijent.getId());
+			parameters.put("datumOd", timestamp1);
+			parameters.put("datumDo", timestamp2);
+			
+			File file = new File(System.getProperty("user.dir")+"/Izvestaji/Izvod.jasper");
+			JasperPrint jp = JasperFillManager.fillReport(new FileInputStream(file),
+					parameters, 
+					conn);
+			String timeStamp = new SimpleDateFormat("ddMMyyyy_HHmmss").format(Calendar.getInstance().getTime());
+			JasperExportManager.exportReportToPdfFile(jp, "./Izvestaji/Izvestaj_" + klijent.getIme() + "_" + timeStamp +".pdf");
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	}
+	
 }

@@ -37,6 +37,8 @@ $(document).ready(function(){
 		$("select").val(id);
 		$('#bankaModal').modal('toggle');
 	});
+	
+	
 	$("#nextform1").click(function()
 			{
 				console.log("DOSLO 1");
@@ -94,6 +96,10 @@ function remove(id)
 		
 		}
 	
+}
+
+function sendReportFun(id,datumOd,datumDo) {
+	$(location).attr('href','/Klijenti/exportToPdf?id='+id+'&dod='+datumOd+'&ddo='+datumDo);
 }
 
 function nextform1(id)
@@ -275,6 +281,7 @@ function nextform2(id)
 				<div id = "formActions">
 					<input type = "submit" value = "Potvrda" style="margin-left:6em"/>
 					<a href = "#" style="margin-left:1em">Rollback</a>
+					<a href = "#" data-toggle="modal" data-target="#datumModal" style="margin-left:1em">Izvestaj klijenta</a>
 				</div>			
 				
 		</form>
@@ -349,6 +356,27 @@ function nextform2(id)
 		</table>
 		<div class="modal-footer">
 			<input id = "naseljenoMestoPickup" type = "button" value = "izbor"/>
+		</div>
+		</div>
+      </div>
+    </div>
+   </div>
+   
+   <!-- Modal izvestaj-->
+  <div class="modal fade" id="datumModal" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+      <div class="modal-header">
+      	Datum
+      </div>
+      <div class="modal-body">
+	  	Datum od:<br>
+		<input type="date" name="dod" class="k_dod"><br><br>
+		Datum do:<br>
+		<input type="date" name="ddo" class="k_ddo"><br><br>
+		<div class="modal-footer">
+			<input id="sendReportClient" type = "button" value = "izbor"/>
 		</div>
 		</div>
       </div>

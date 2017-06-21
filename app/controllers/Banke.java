@@ -15,38 +15,33 @@ import java.util.Properties;
 
 import models.Banka;
 import models.Drzava;
-//import net.sf.jasperreports.engine.JasperExportManager;
-//import net.sf.jasperreports.engine.JasperFillManager;
-//import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
 import play.mvc.Controller;
 
 public class Banke extends Controller {
 
 	public static void show(String mode, Long selectedIndex) {
-		if(session.get("banka_id")!=null)
-		{
-			
+		if (session.get("banka_id") != null) {
+
 			List<Banka> bankex = Banka.findAll();
-			ArrayList<Banka> banke =new ArrayList<Banka>();
-			for(Banka b: bankex)
-			{
-				if(b.getId()==Long.valueOf(session.get("banka_id")))
-				{
+			ArrayList<Banka> banke = new ArrayList<Banka>();
+			for (Banka b : bankex) {
+				if (b.getId() == Long.valueOf(session.get("banka_id"))) {
 					banke.add(b);
 				}
 			}
 			if (mode == null || mode.equals(""))
 				mode = "edit";
 			render(banke, mode, selectedIndex);
-		}
-		else
-		{
+		} else {
 			List<Banka> banke = Banka.findAll();
 			if (mode == null || mode.equals(""))
 				mode = "edit";
 			render(banke, mode, selectedIndex);
 		}
-		
+
 	}
 
 	public static void create(Banka banka) {
@@ -111,7 +106,7 @@ public class Banke extends Controller {
 		ban.delete();
 		show("edit", ban.id - 1);
 	}
-/*
+
 	public void exportToPdf(Long id) {
 		try {
 			Banka bank = Banka.findById(id);
@@ -119,32 +114,21 @@ public class Banke extends Controller {
 			Properties connectionProps = new Properties();
 
 			connectionProps.put("user", "root");
-			connectionProps.put("password", "hcxxx69");
+			connectionProps.put("password", "cuko");
 
 			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/poslovna", connectionProps);
 
 			Map<String, Object> parameters = new HashMap<String, Object>();
 			parameters.put("ID_Banke", bank.getId());
-			
-			File file = new File(System.getProperty("user.dir")+"/Izvestaji/Racuni.jasper");
-			//stavim u app ili newinputstream
-			System.out.println("PROSLO 1");
-			JasperPrint jp = JasperFillManager.fillReport(new FileInputStream(file),
-					parameters, 
-					conn);
-			System.out.println("PROSLO 2");
-			//System.getProperty("user.dir")+"/Izvestaji/Racuni.jasper"
-			// eksport
-			//File pdf = File.createTempFile("output.", ".pdf");
-			// JasperExportManager.exportReportToPdfStream(jp, new
-			// FileOutputStream(pdf));
+
+			File file = new File(System.getProperty("user.dir") + "/Izvestaji/Racuni.jasper");
+			JasperPrint jp = JasperFillManager.fillReport(new FileInputStream(file), parameters, conn);
 			String timeStamp = new SimpleDateFormat("ddMMyyyy_HHmmss").format(Calendar.getInstance().getTime());
-			JasperExportManager.exportReportToPdfFile(jp, "./Izvestaji/Izvestaj_" + bank.getNazivBanke() + "_" + timeStamp +".pdf");
+			JasperExportManager.exportReportToPdfFile(jp,
+					"./Izvestaji/Izvestaj_" + bank.getNazivBanke() + "_" + timeStamp + ".pdf");
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			System.out.println("Umro laptop");
 		}
 	}
-	*/
 
 }

@@ -20,6 +20,16 @@ $(document).ready(function(){
 		id = highlighted.find(".id").html();
 		sendReportFun(id);
 	})
+	
+	$("#sendReportClient").click(function()
+		{
+		highlighted=$(".highlighted");
+		var datumOd = document.getElementsByClassName("k_dod");
+		var datumDo = document.getElementsByClassName("k_ddo");
+		id = highlighted.find(".id").html();
+		sendReportFun(id,datumOd.dod.value,datumDo.ddo.value);
+	})
+
 
   $("tr").click(function() {
  	 //ne reagujemo na klik na header tabele, samo obicne redove
