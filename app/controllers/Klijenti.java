@@ -175,12 +175,32 @@ public class Klijenti extends Controller{
 	
 	public static void filter(Klijent klijent)
 	{
-		//OVDE JOS DORADITI
-		List<Klijent> klijenti = Klijent.find("byJmbgLikeAndImeLikeAndPrezimeLikeAndAdresaLikeAndTelefonLikeAndEmailLike", "%"+klijent.jmbg+"%", "%"+klijent.ime+"%", "%"+klijent.prezime+"%", "%"+klijent.adresa+"%", "%"+klijent.telefon+"%", "%"+klijent.email+"%").fetch();
-		String mode = "edit";
-		List<NaseljenoMesto> naseljenaMesta = NaseljenoMesto.findAll();
-		List<Banka> banke = Banka.findAll();
-		renderTemplate("Klijenti/show.html", klijenti,naseljenaMesta, banke, mode );
+		if(session.get("banka_id")!=null)
+		{
+			
+			List<Klijent> k = Klijent.find("byJmbgLikeAndImeLikeAndPrezimeLikeAndAdresaLikeAndTelefonLikeAndEmailLike", "%"+klijent.jmbg+"%", "%"+klijent.ime+"%", "%"+klijent.prezime+"%", "%"+klijent.adresa+"%", "%"+klijent.telefon+"%", "%"+klijent.email+"%").fetch();
+			
+			List<Klijent> klijenti = new ArrayList<Klijent>();
+			for(int i=0; i<k.size();i++) {
+				if(k.get(i).getBanka().getId().equals(Long.parseLong(session.get("banka_id"))))
+					klijenti.add(k.get(i));			
+			}
+			String mode = "edit";
+			List<NaseljenoMesto> naseljenaMesta = NaseljenoMesto.findAll();
+			List<Banka> banke = Banka.findAll();
+			renderTemplate("Klijenti/show.html", klijenti,naseljenaMesta, banke, mode );
+			
+		} else {
+			List<Klijent> klijenti = Klijent
+					.find("byJmbgLikeAndImeLikeAndPrezimeLikeAndAdresaLikeAndTelefonLikeAndEmailLike",
+							"%" + klijent.jmbg + "%", "%" + klijent.ime + "%", "%" + klijent.prezime + "%",
+							"%" + klijent.adresa + "%", "%" + klijent.telefon + "%", "%" + klijent.email + "%")
+					.fetch();
+			String mode = "edit";
+			List<NaseljenoMesto> naseljenaMesta = NaseljenoMesto.findAll();
+			List<Banka> banke = Banka.findAll();
+			renderTemplate("Klijenti/show.html", klijenti, naseljenaMesta, banke, mode);
+		}
 	}
 	
 	public static void delete(Long id)

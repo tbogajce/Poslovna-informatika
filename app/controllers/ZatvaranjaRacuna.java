@@ -508,12 +508,22 @@ public class ZatvaranjaRacuna extends Controller{
 	
 	public static void filter(String filterx)
 	{
-		//OVDE JOS DORADITI
-		//List<Klijent> racuni = Klijent.find("byBrojRacunaLikeAndStatusLike", "%"+racun.brojRacuna+"%", "%"+racun.status+"%").fetch();
-		//String mode = "edit";
-		List<ZatvaranjeRacuna> zatvaranjaRacuna = ZatvaranjeRacuna.find("byRacunLike", "%"+filterx+"%").fetch();
-		
+		System.out.println("racun je " + filterx);
+		if(session.get("banka_id")!=null)
+		{
+			
+		List<ZatvaranjeRacuna> zr = ZatvaranjeRacuna.find("byRacunLike", "%"+filterx+"%").fetch();
+		List<ZatvaranjeRacuna> zatvaranjaRacuna = new ArrayList<ZatvaranjeRacuna>();
+		for(int i=0;i<zr.size();i++) {
+			if(zr.get(i).getRacun().getBanka().getId().equals(Long.valueOf(session.get("banka_id"))))
+				zatvaranjaRacuna.add(zr.get(i));
+		}
 		renderTemplate("ZatvaranjeRacuna/show.html", zatvaranjaRacuna );
+		
+		} else {
+		List<ZatvaranjeRacuna> zatvaranjaRacuna = ZatvaranjeRacuna.find("byRacunLike", "%"+filterx+"%").fetch();
+		renderTemplate("ZatvaranjeRacuna/show.html", zatvaranjaRacuna );
+		}	
 	}
 	
 	

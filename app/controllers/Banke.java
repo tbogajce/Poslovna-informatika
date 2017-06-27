@@ -94,11 +94,23 @@ public class Banke extends Controller {
 	}
 
 	public static void filter(Banka banka) {
-		List<Banka> banke = Banka
-				.find("bySifraBankeLikeAndNazivBankeLike", "%" + banka.sifraBanke + "%", "%" + banka.nazivBanke + "%")
-				.fetch();
-		String mode = "edit";
-		renderTemplate("Banke/show.html", banke, mode);
+		if (session.get("banka_id") != null) {
+			List<Banka> banke1 = Banka.find("bySifraBankeLikeAndNazivBankeLike", "%" + banka.sifraBanke + "%",
+					"%" + banka.nazivBanke + "%").fetch();
+			List<Banka> banke = new ArrayList<Banka>();
+			for(int i=0; i<banke1.size();i++) {
+				if(banke1.get(i).getId().equals(Long.parseLong(session.get("banka_id")))){
+					banke.add(banke1.get(i));
+				}
+			}
+			String mode = "edit";
+			renderTemplate("Banke/show.html", banke, mode);
+		} else {
+			List<Banka> banke = Banka.find("bySifraBankeLikeAndNazivBankeLike", "%" + banka.sifraBanke + "%",
+					"%" + banka.nazivBanke + "%").fetch();
+			String mode = "edit";
+			renderTemplate("Banke/show.html", banke, mode);
+		}
 	}
 
 	public static void delete(Long id) {
